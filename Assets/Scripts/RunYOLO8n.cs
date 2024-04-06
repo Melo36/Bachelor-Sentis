@@ -169,19 +169,23 @@ public class RunYOLO8n : MonoBehaviour
 
         if (webcamTexture)
         {
-            shaderMaterial.mainTexture = webcamTexture;
-            Graphics.Blit(webcamTexture, targetRT, shaderMaterial);
-            float aspect = (float)webcamTexture.height / (float)webcamTexture.width;
-            fit.aspectRatio = aspect;
-            
-            Graphics.Blit(targetRT, targetRT, new Vector2(1f/aspect, 1f), new Vector2(0,0));
-            
-            float mirror = webcamTexture.videoVerticallyMirrored ? -1f : 1f;
-            //displayImage.rectTransform.localScale = new Vector3(1f / aspect, mirror / aspect, 1f / aspect);
-            
-            int orient = -webcamTexture.videoRotationAngle;
-            //displayImage.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
-            
+            #if UNITY_EDITOR_OSX
+                float aspect = (float)webcamTexture.width / (float)webcamTexture.height;
+                fit.aspectRatio = aspect;
+                float mirror = webcamTexture.videoVerticallyMirrored ? -1f : 1f;
+                displayImage.rectTransform.localScale = new Vector3(1f / aspect, mirror / aspect, 1f / aspect);
+                
+                int orient = -webcamTexture.videoRotationAngle;
+                displayImage.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
+                
+                Graphics.Blit(webcamTexture, targetRT, new Vector2(1f, 1f), new Vector2(0,0));
+            #elif UNITY_IOS
+                float aspect = (float)webcamTexture.height / (float)webcamTexture.width;
+                fit.aspectRatio = aspect;
+                shaderMaterial.mainTexture = webcamTexture;
+                Graphics.Blit(webcamTexture, targetRT, shaderMaterial);
+                Graphics.Blit(targetRT, targetRT, new Vector2(1f/aspect, 1f), new Vector2(0,0));
+            #endif
             displayImage.texture = targetRT;
         }
         else return;
@@ -218,7 +222,6 @@ public class RunYOLO8n : MonoBehaviour
                 height = output[0, n, 3] * scaleY,
                 label = labels[labelIDs[0, 0,n]],
             };
-            Debug.Log("Bounding box ist " + box);
             DrawBox(box, n);
         }
     }
