@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using Lays = Unity.Sentis.Layers;
 
+
 /*
  *  YOLOv8n Inference Script
  *  ========================
@@ -65,6 +66,7 @@ public class RunYOLO8n : MonoBehaviour
     [SerializeField] private AspectRatioFitter fit;
 
     public Material shaderMaterial;
+    private FoodFacts foodFacts;
 
     //bounding box data
     public struct BoundingBox
@@ -96,6 +98,8 @@ public class RunYOLO8n : MonoBehaviour
 
         //Create engine to run model
         engine = WorkerFactory.CreateWorker(backend, model);
+
+        foodFacts = GetComponent<FoodFacts>();
 
         SetupInput();
     }
@@ -230,6 +234,7 @@ public class RunYOLO8n : MonoBehaviour
     {
         //Create the bounding box graphic or get from pool
         GameObject panel;
+        bool newBbox = false;
         if (id < boxPool.Count)
         {
             panel = boxPool[id];
@@ -238,6 +243,7 @@ public class RunYOLO8n : MonoBehaviour
         else
         {
             panel = CreateNewBox(Color.magenta, Color.black);
+            newBbox = true;
         }
         //Set box position
         panel.transform.localPosition = new Vector3(box.centerX, -box.centerY);
@@ -247,8 +253,24 @@ public class RunYOLO8n : MonoBehaviour
         rt.sizeDelta = new Vector2(box.width, box.height);
         
         //Set label text
-        var label = panel.GetComponentInChildren<Text>();
-        label.text = box.label;
+        var childrenText = panel.GetComponentsInChildren<Text>();
+        bool changed = false;
+        for (int i = 0;i<childrenText.Length;i++)
+        {
+            var child = childrenText[i];
+            if (child.name == "ObjectLabel" && child.text != box.label) {
+                child.text = box.label;
+                changed = true;
+            } else if (child.name == "NutritionLabel" && (changed || newBbox))
+            {
+                string facts;
+                StartCoroutine(foodFacts.GetRequest(box.label, result => {
+                    // Handle the result here
+                    facts = result;
+                    child.text = facts;
+                }));
+            }
+        }
     }
 
     public GameObject CreateNewBox(Color boxColor, Color textColor)
@@ -271,7 +293,7 @@ public class RunYOLO8n : MonoBehaviour
         Text txt = text.AddComponent<Text>();
         txt.font = font;
         txt.color = textColor;
-        txt.fontSize = 40;
+        txt.fontSize = 20;
         txt.horizontalOverflow = HorizontalWrapMode.Overflow;
 
         RectTransform rt2 = text.GetComponent<RectTransform>();
@@ -281,6 +303,38 @@ public class RunYOLO8n : MonoBehaviour
         rt2.offsetMax = new Vector2(rt2.offsetMax.x, 30);
         rt2.anchorMin = new Vector2(0, 0);
         rt2.anchorMax = new Vector2(1, 1);
+        
+        // Create NutritionLabel
+
+        var nutritionLabel = new GameObject("NutritionLabel");
+        nutritionLabel.AddComponent<CanvasRenderer>();
+        nutritionLabel.transform.SetParent(panel.transform, false);
+        Text nutritionTxt = nutritionLabel.AddComponent<Text>();
+        nutritionTxt.font = font;
+        nutritionTxt.fontSize = 250;
+        nutritionTxt.color = Color.green;
+        nutritionTxt.horizontalOverflow = HorizontalWrapMode.Overflow;
+        
+        RectTransform rt3 = nutritionLabel.GetComponent<RectTransform>();
+
+        // Calculate label width and offset from the bounding box
+        float labelWidth = 150f; // Adjust this value based on your label size
+        float offsetFromBox = 2000f; // Adjust this value for spacing
+
+        // Get the RectTransform of the bounding box (panel)
+        RectTransform boxRT = panel.GetComponent<RectTransform>();
+
+        // Calculate the position to the left of the bounding box
+        float labelXPosition = boxRT.offsetMin.x - offsetFromBox - labelWidth;
+
+        // Set the position and size of the NutritionLabel
+        rt3.anchorMin = new Vector2(0, 0); // Left edge of the panel
+        rt3.anchorMax = new Vector2(0, 1); // Left edge of the panel
+        rt3.pivot = new Vector2(1, 0.5f); // Anchored to the left edge
+
+        // Set the position and size of the label
+        rt3.offsetMin = new Vector2(labelXPosition, 0);
+        rt3.offsetMax = new Vector2(labelXPosition + labelWidth, boxRT.offsetMax.y); // Match height with bounding box
 
         boxPool.Add(panel);
         return panel;
