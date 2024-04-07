@@ -104,8 +104,8 @@ public class FoodFacts : MonoBehaviour
     
     public string getNutriments(Nutriments productNutriments)
     {
-        return "Fett: " + productNutriments.fat_100g + "\n"
-               + "Kohlenhydrate: " + productNutriments.carbohydrates_100g + "\n"
-               + "Eiweiß: " + productNutriments.proteins_100g;;
+        return "Fett: " + productNutriments.fat_100g + "g\n"
+               + "Kohlenhydrate: " + productNutriments.carbohydrates_100g + "g\n"
+               + "Eiweiß: " + productNutriments.proteins_100g + "g";
     }
 }

@@ -42,6 +42,9 @@ public class RunYOLO8n : MonoBehaviour
     private string[] labels;
     private RenderTexture targetRT;
 
+    [SerializeField]
+    private GameObject nutritionLabelPrefab;
+
 
     //Image size for the model
     private const int imageWidth = 640;
@@ -285,6 +288,8 @@ public class RunYOLO8n : MonoBehaviour
         img.type = Image.Type.Sliced;
         panel.transform.SetParent(displayLocation, false);
 
+        createNutritionLabel(panel);
+
         //Create the label
 
         var text = new GameObject("ObjectLabel");
@@ -338,6 +343,22 @@ public class RunYOLO8n : MonoBehaviour
 
         boxPool.Add(panel);
         return panel;
+    }
+
+    private void createNutritionLabel(GameObject panel)
+    {
+        var nutritionLabel = Instantiate(nutritionLabelPrefab);
+        nutritionLabel.transform.SetParent(panel.transform, false);
+        Canvas canvas = nutritionLabel.GetComponentInChildren<Canvas>();
+        canvas.transform.localScale = new Vector3(2,2f,1);
+        RectTransform rt2 = nutritionLabel.GetComponent<RectTransform>();
+        rt2.offsetMin = new Vector2(20, rt2.offsetMin.y);
+        rt2.offsetMax = new Vector2(0, rt2.offsetMax.y);
+        rt2.offsetMin = new Vector2(rt2.offsetMin.x, 0);
+        rt2.offsetMax = new Vector2(rt2.offsetMax.x, 30);
+        rt2.anchorMin = new Vector2(0, 0);
+        rt2.anchorMax = new Vector2(1, 1);
+        
     }
 
     public void ClearAnnotations()
