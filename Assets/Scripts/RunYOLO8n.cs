@@ -1,9 +1,19 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
+using Unity.IntegerTime;
 using Unity.Sentis;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 using Lays = Unity.Sentis.Layers;
+using Unity.Collections;
+using Unity.XR.CoreUtils;
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 
 /*
@@ -41,6 +51,7 @@ public class RunYOLO8n : MonoBehaviour
     private IWorker engine;
     private string[] labels;
     private RenderTexture targetRT;
+    private string currentLabel = "";
 
     [SerializeField]
     private GameObject nutritionLabelPrefab;
@@ -62,7 +73,7 @@ public class RunYOLO8n : MonoBehaviour
     //For using tensor operators:
     Ops ops;
 
-    private WebCamTexture webcamTexture;
+    //private WebCamTexture webcamTexture;
     [SerializeField]
     private ModelAsset modelAsset;
 
@@ -70,6 +81,14 @@ public class RunYOLO8n : MonoBehaviour
 
     public Material shaderMaterial;
     private FoodFacts foodFacts;
+    private int frame = 0;
+
+    private ARCameraManager cameraManager;
+    private XRCpuImage cpuImage;
+    public Vector2Int DesireResolution = new Vector2Int(1170,2532);
+    private Texture2D outputTexture = null;
+
+    [SerializeField] private PlaceEagleManager eagleManager;
 
     //bounding box data
     public struct BoundingBox
@@ -109,19 +128,59 @@ public class RunYOLO8n : MonoBehaviour
 
     void SetupInput()
     {
-        WebCamDevice[] devices = WebCamTexture.devices;
-        if (devices.Length == 0)
-        {
-            Debug.LogError("No webcam detected.");
-            return;
-        }
-
-        // Start capturing from the first webcam found
-        webcamTexture = new WebCamTexture(devices[0].name, Screen.width, Screen.height);
-        webcamTexture.Play();
+       
     }
 
-    void LoadModel()
+    private void OnEnable()
+    {
+        cameraManager = GetComponent<ARCameraManager>();
+        cameraManager.frameReceived += FrameChanged;
+    }
+
+    private void OnDisable()
+    {
+        cameraManager.frameReceived -= FrameChanged;
+    }
+    
+    private void FrameChanged(ARCameraFrameEventArgs args){
+        if (!cameraManager.TryAcquireLatestCpuImage(out cpuImage))
+        {
+            Debug.Log("Nicht geklaoptt");
+            return;
+        }
+        using (cpuImage) {
+            var width = Mathf.Min(DesireResolution.x, cpuImage.width);
+            var height = Mathf.Min((DesireResolution.y * width) / DesireResolution.x, cpuImage.height);
+
+            var conversionParams = new XRCpuImage.ConversionParams {
+                inputRect = new RectInt(0, 0, cpuImage.width, cpuImage.height),
+                outputDimensions = new Vector2Int(width, height),
+                outputFormat = TextureFormat.RGBA32,
+                transformation = XRCpuImage.Transformation.MirrorY,
+            };
+            
+            int size = cpuImage.GetConvertedDataSize(conversionParams);
+            
+            using var buffer = new NativeArray<byte>(size, Allocator.Temp);
+            var slice = new NativeSlice<byte>(buffer);
+
+            cpuImage.Convert(conversionParams, slice);
+
+            if (outputTexture == null) {
+                outputTexture = new Texture2D(
+                    conversionParams.outputDimensions.x,
+                    conversionParams.outputDimensions.y,
+                    conversionParams.outputFormat,
+                    false);
+            }
+
+            outputTexture.LoadRawTextureData(buffer);
+            outputTexture.Apply();
+        }
+    }
+    
+
+    private void LoadModel()
     {
         //Load model
         model = ModelLoader.Load(modelAsset);
@@ -170,32 +229,41 @@ public class RunYOLO8n : MonoBehaviour
         }
     }
 
-    public void ExecuteML()
+    private void ExecuteML()
     {
-        ClearAnnotations();
-
-        if (webcamTexture)
+        if (outputTexture)
         {
             #if UNITY_EDITOR_OSX
-                float aspect = (float)webcamTexture.width / (float)webcamTexture.height;
+                /*float aspect = (float)webcamTexture.width / (float)webcamTexture.height;
                 fit.aspectRatio = aspect;
                 float mirror = webcamTexture.videoVerticallyMirrored ? -1f : 1f;
                 displayImage.rectTransform.localScale = new Vector3(1f / aspect, mirror / aspect, 1f / aspect);
                 
                 int orient = -webcamTexture.videoRotationAngle;
-                displayImage.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
+                displayImage.rectTransform.localEulerAngles = new Vector3(0, 0, orient);*/
                 
-                Graphics.Blit(webcamTexture, targetRT, new Vector2(1f, 1f), new Vector2(0,0));
+                //var texture2D = new Texture2D(cpuImage.width, cpuImage.height, cpuImage.format.AsTextureFormat(), false);
+                
+                //Graphics.Blit(webcamTexture, targetRT, new Vector2(1f, 1f), new Vector2(0,0));
             #elif UNITY_IOS
-                float aspect = (float)webcamTexture.height / (float)webcamTexture.width;
+                float aspect = (float)outputTexture.width / (float)outputTexture.height;
                 fit.aspectRatio = aspect;
-                shaderMaterial.mainTexture = webcamTexture;
-                Graphics.Blit(webcamTexture, targetRT, shaderMaterial);
+                shaderMaterial.mainTexture = outputTexture;
+                Graphics.Blit(outputTexture, targetRT, shaderMaterial);
                 Graphics.Blit(targetRT, targetRT, new Vector2(1f/aspect, 1f), new Vector2(0,0));
             #endif
             displayImage.texture = targetRT;
         }
         else return;
+
+        // TODO: implement moving average
+        frame++;
+        if (frame % 10 != 0)
+        {
+            return;
+        }
+        
+        ClearAnnotations();
         
         using var input = TextureConverter.ToTensor(targetRT, imageWidth, imageHeight, 3);
         engine.Execute(input);
@@ -233,7 +301,7 @@ public class RunYOLO8n : MonoBehaviour
         }
     }
 
-    public void DrawBox(BoundingBox box , int id)
+    private void DrawBox(BoundingBox box , int id)
     {
         //Create the bounding box graphic or get from pool
         GameObject panel;
@@ -256,30 +324,30 @@ public class RunYOLO8n : MonoBehaviour
         rt.sizeDelta = new Vector2(box.width, box.height);
         
         //Set label text
-        var childrenText = panel.GetComponentsInChildren<Text>();
-        bool changed = false;
-        for (int i = 0;i<childrenText.Length;i++)
+        if (currentLabel != box.label || newBbox)
         {
-            var child = childrenText[i];
-            if (child.name == "ObjectLabel" && child.text != box.label) {
-                child.text = box.label;
-                changed = true;
-            } else if (child.name == "NutritionLabel" && (changed || newBbox))
+            StartCoroutine(foodFacts.GetRequest(box.label, result =>
             {
-                string facts;
-                StartCoroutine(foodFacts.GetRequest(box.label, result => {
-                    // Handle the result here
-                    facts = result;
-                    child.text = facts;
-                }));
-            }
+                // Handle the result here
+                float[] values = result;
+                PieChart pieChart = panel.GetComponentInChildren<PieChart>();
+                pieChart.setValues(values);
+                var textChildren = panel.GetComponentsInChildren<TextMeshProUGUI>();
+                string[] type = { "Fett: ", "Kohlenhydrate: ", "Eiweiß: " };
+                for (int i = 0; i < textChildren.Length; i++)
+                {
+                    textChildren[i].text = type[i] + values[i] + "g";
+                }
+
+                currentLabel = box.label;
+                eagleManager.placeEagle(box.centerX, -box.centerY);
+            }));
         }
     }
 
-    public GameObject CreateNewBox(Color boxColor, Color textColor)
+    private GameObject CreateNewBox(Color boxColor, Color textColor)
     {
         //Create the box and set image
-
         var panel = new GameObject("ObjectBox");
         panel.AddComponent<CanvasRenderer>();
         Image img = panel.AddComponent<Image>();
@@ -290,57 +358,6 @@ public class RunYOLO8n : MonoBehaviour
 
         createNutritionLabel(panel);
 
-        //Create the label
-
-        var text = new GameObject("ObjectLabel");
-        text.AddComponent<CanvasRenderer>();
-        text.transform.SetParent(panel.transform, false);
-        Text txt = text.AddComponent<Text>();
-        txt.font = font;
-        txt.color = textColor;
-        txt.fontSize = 20;
-        txt.horizontalOverflow = HorizontalWrapMode.Overflow;
-
-        RectTransform rt2 = text.GetComponent<RectTransform>();
-        rt2.offsetMin = new Vector2(20, rt2.offsetMin.y);
-        rt2.offsetMax = new Vector2(0, rt2.offsetMax.y);
-        rt2.offsetMin = new Vector2(rt2.offsetMin.x, 0);
-        rt2.offsetMax = new Vector2(rt2.offsetMax.x, 30);
-        rt2.anchorMin = new Vector2(0, 0);
-        rt2.anchorMax = new Vector2(1, 1);
-        
-        // Create NutritionLabel
-
-        var nutritionLabel = new GameObject("NutritionLabel");
-        nutritionLabel.AddComponent<CanvasRenderer>();
-        nutritionLabel.transform.SetParent(panel.transform, false);
-        Text nutritionTxt = nutritionLabel.AddComponent<Text>();
-        nutritionTxt.font = font;
-        nutritionTxt.fontSize = 250;
-        nutritionTxt.color = Color.green;
-        nutritionTxt.horizontalOverflow = HorizontalWrapMode.Overflow;
-        
-        RectTransform rt3 = nutritionLabel.GetComponent<RectTransform>();
-
-        // Calculate label width and offset from the bounding box
-        float labelWidth = 150f; // Adjust this value based on your label size
-        float offsetFromBox = 2000f; // Adjust this value for spacing
-
-        // Get the RectTransform of the bounding box (panel)
-        RectTransform boxRT = panel.GetComponent<RectTransform>();
-
-        // Calculate the position to the left of the bounding box
-        float labelXPosition = boxRT.offsetMin.x - offsetFromBox - labelWidth;
-
-        // Set the position and size of the NutritionLabel
-        rt3.anchorMin = new Vector2(0, 0); // Left edge of the panel
-        rt3.anchorMax = new Vector2(0, 1); // Left edge of the panel
-        rt3.pivot = new Vector2(1, 0.5f); // Anchored to the left edge
-
-        // Set the position and size of the label
-        rt3.offsetMin = new Vector2(labelXPosition, 0);
-        rt3.offsetMax = new Vector2(labelXPosition + labelWidth, boxRT.offsetMax.y); // Match height with bounding box
-
         boxPool.Add(panel);
         return panel;
     }
@@ -350,15 +367,23 @@ public class RunYOLO8n : MonoBehaviour
         var nutritionLabel = Instantiate(nutritionLabelPrefab);
         nutritionLabel.transform.SetParent(panel.transform, false);
         Canvas canvas = nutritionLabel.GetComponentInChildren<Canvas>();
-        canvas.transform.localScale = new Vector3(2,2f,1);
-        RectTransform rt2 = nutritionLabel.GetComponent<RectTransform>();
-        rt2.offsetMin = new Vector2(20, rt2.offsetMin.y);
-        rt2.offsetMax = new Vector2(0, rt2.offsetMax.y);
-        rt2.offsetMin = new Vector2(rt2.offsetMin.x, 0);
-        rt2.offsetMax = new Vector2(rt2.offsetMax.x, 30);
-        rt2.anchorMin = new Vector2(0, 0);
-        rt2.anchorMax = new Vector2(1, 1);
+        canvas.transform.localScale = new Vector3(1,1,1);
         
+        RectTransform rt = nutritionLabel.GetComponent<RectTransform>();
+        
+        // Set the anchor to align the bottom of the nutritionLabel with the top of the panel
+        rt.anchorMin = new Vector2(0f, 1f); // Anchor at the top-left corner of the panel
+        rt.anchorMax = new Vector2(1f, 1f); // Anchor at the top-right corner of the panel
+        rt.pivot = new Vector2(0.5f, 1f); // Pivot at the bottom-center of the nutritionLabel
+
+        // Calculate the height of the panel and desired height of the nutritionLabel
+        float nutritionLabelHeight = 500f;
+
+        // Set the size of the nutritionLabel
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, nutritionLabelHeight);
+
+        // Calculate the anchored position to align the bottom of the nutritionLabel with the top of the panel
+        rt.anchoredPosition = new Vector2(0f, nutritionLabelHeight);
     }
 
     public void ClearAnnotations()

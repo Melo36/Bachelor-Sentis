@@ -36,8 +36,8 @@ Shader "Custom/RotateMirrorShader"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
 
-                // Rotate texture coordinates by 90 degrees and mirror horizontally
-                o.texcoord = float2(1.0 - v.texcoord.y, 1.0 - v.texcoord.x);
+                // Rotate texture coordinates by -90 degrees and mirror horizontally
+                o.texcoord = float2(v.texcoord.y, 1.0 - v.texcoord.x);
 
                 return o;
             }

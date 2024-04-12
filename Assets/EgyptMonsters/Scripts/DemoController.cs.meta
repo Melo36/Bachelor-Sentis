@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 05210583cc3daf24186b660cada5da85
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 140079
+  packageName: Egypt Pack - Eagle
+  packageVersion: 1.0
+  assetPath: Assets/EgyptMonsters/Scripts/DemoController.cs
+  uploadId: 294860

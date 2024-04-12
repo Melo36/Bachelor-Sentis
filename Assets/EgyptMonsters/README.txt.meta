@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a740c26e79f79624881ed828a63395c0
+timeCreated: 1530445871
+licenseType: Store
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 140079
+  packageName: Egypt Pack - Eagle
+  packageVersion: 1.0
+  assetPath: Assets/EgyptMonsters/README.txt
+  uploadId: 294860

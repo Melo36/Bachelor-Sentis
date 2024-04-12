@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 42cff02f1ed13a442a6b3b356db1a3f9
+timeCreated: 1530384877
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 140079
+  packageName: Egypt Pack - Eagle
+  packageVersion: 1.0
+  assetPath: Assets/EgyptMonsters/Demo/DemoAssets/Meshes/AttackDummy.controller
+  uploadId: 294860

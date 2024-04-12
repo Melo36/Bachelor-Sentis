@@ -56,7 +56,7 @@ public class FoodFacts : MonoBehaviour
         //callRequest("haferflocken_ja");
     }
 
-    public IEnumerator GetRequest(string productName, System.Action<string> callback)
+    public IEnumerator GetRequest(string productName, System.Action<float[]> callback)
     {
         string barcode = dict[productName];
         string foodFactLink = "https://world.openfoodfacts.net/api/v2/product/" + barcode 
@@ -90,7 +90,7 @@ public class FoodFacts : MonoBehaviour
                         productNutriments.proteins_100g = response.product.nutriments.proteins_100g;
                         productNutriments.carbohydrates_100g = response.product.nutriments.carbohydrates_100g;
                         productNutriments.fat_100g = response.product.nutriments.fat_100g;
-                        string result = getNutriments(productNutriments);
+                        float[] result = getNutriments(productNutriments);
                         callback?.Invoke(result);
                     }
                     else
@@ -102,10 +102,12 @@ public class FoodFacts : MonoBehaviour
         }
     }
     
-    public string getNutriments(Nutriments productNutriments)
+    public float[] getNutriments(Nutriments productNutriments)
     {
-        return "Fett: " + productNutriments.fat_100g + "g\n"
-               + "Kohlenhydrate: " + productNutriments.carbohydrates_100g + "g\n"
-               + "Eiweiß: " + productNutriments.proteins_100g + "g";
+        float[] values = new float[3];
+        values[0] = productNutriments.fat_100g;
+        values[1] = productNutriments.carbohydrates_100g;
+        values[2] = productNutriments.proteins_100g;
+        return values;
     }
 }
