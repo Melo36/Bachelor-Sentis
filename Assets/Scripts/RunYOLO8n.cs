@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.IntegerTime;
 using Unity.Sentis;
@@ -10,31 +11,10 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using Lays = Unity.Sentis.Layers;
 using Unity.Collections;
-using Unity.XR.CoreUtils;
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
-
-
-/*
- *  YOLOv8n Inference Script
- *  ========================
- *
- * Place this script on the Main Camera.
- *
- * Place the yolov8n.sentis file and a *.mp4 video file in the Assets/StreamingAssets folder
- * Create a RawImage in your scene and set it as the displayImage field
- * Drag the classes.txt into the labelsAsset field
- * Add a reference to a sprite image for the bounding box and a font for the text
- *
- */
 
 
 public class RunYOLO8n : MonoBehaviour
 {
-    const string modelName = "sweets.sentis";
-    // Change this to the name of the video you put in StreamingAssets folder:
-    const string videoName = "IMG_1742.mp4";
     // Link the classes.txt here:
     public TextAsset labelsAsset;
     // Create a Raw Image in the scene and link it here:
@@ -77,6 +57,7 @@ public class RunYOLO8n : MonoBehaviour
     [SerializeField]
     private ModelAsset modelAsset;
 
+    private WebCamTexture webcamTexture;
     [SerializeField] private AspectRatioFitter fit;
 
     public Material shaderMaterial;
@@ -89,6 +70,13 @@ public class RunYOLO8n : MonoBehaviour
     private Texture2D outputTexture = null;
 
     [SerializeField] private PlaceEagleManager eagleManager;
+    [SerializeField] private GameObject eagle;
+
+    [SerializeField] private GameObject xrOrigin;
+    [SerializeField] private GameObject arSession;
+    [SerializeField] private GameObject sceneCamera;
+
+    private bool placedEagle = false;
 
     //bounding box data
     public struct BoundingBox
@@ -123,23 +111,41 @@ public class RunYOLO8n : MonoBehaviour
 
         foodFacts = GetComponent<FoodFacts>();
 
+        #if UNITY_EDITOR_OSX
+        arSession.SetActive(false);
+        xrOrigin.SetActive(false);
+        sceneCamera.SetActive(true);
         SetupInput();
+        #endif
     }
 
     void SetupInput()
     {
-       
+        WebCamDevice[] devices = WebCamTexture.devices;
+        if (devices.Length == 0)
+        {
+            Debug.LogError("No webcam detected.");
+        }
+        // Start capturing from the first webcam found
+        webcamTexture = new WebCamTexture(devices[0].name, Screen.width, Screen.height);
+        webcamTexture.Play();
     }
 
     private void OnEnable()
     {
         cameraManager = GetComponent<ARCameraManager>();
-        cameraManager.frameReceived += FrameChanged;
+        if (cameraManager)
+        {
+            cameraManager.frameReceived += FrameChanged;
+        }
     }
 
     private void OnDisable()
     {
-        cameraManager.frameReceived -= FrameChanged;
+        if (cameraManager)
+        {
+            cameraManager.frameReceived -= FrameChanged;
+        }
     }
     
     private void FrameChanged(ARCameraFrameEventArgs args){
@@ -215,6 +221,7 @@ public class RunYOLO8n : MonoBehaviour
 
         model.outputs.Clear();
         model.AddOutput("boxCoords");
+        model.AddOutput("scores");
         model.AddOutput("classIDs");
         model.AddOutput("NMS");
     }
@@ -231,20 +238,18 @@ public class RunYOLO8n : MonoBehaviour
 
     private void ExecuteML()
     {
-        if (outputTexture)
+        if (outputTexture || webcamTexture)
         {
             #if UNITY_EDITOR_OSX
-                /*float aspect = (float)webcamTexture.width / (float)webcamTexture.height;
+                float aspect = (float)webcamTexture.width / (float)webcamTexture.height;
                 fit.aspectRatio = aspect;
                 float mirror = webcamTexture.videoVerticallyMirrored ? -1f : 1f;
                 displayImage.rectTransform.localScale = new Vector3(1f / aspect, mirror / aspect, 1f / aspect);
                 
                 int orient = -webcamTexture.videoRotationAngle;
-                displayImage.rectTransform.localEulerAngles = new Vector3(0, 0, orient);*/
-                
-                //var texture2D = new Texture2D(cpuImage.width, cpuImage.height, cpuImage.format.AsTextureFormat(), false);
-                
-                //Graphics.Blit(webcamTexture, targetRT, new Vector2(1f, 1f), new Vector2(0,0));
+                displayImage.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
+
+                Graphics.Blit(webcamTexture, targetRT, new Vector2(1f, 1f), new Vector2(0,0));
             #elif UNITY_IOS
                 float aspect = (float)outputTexture.width / (float)outputTexture.height;
                 fit.aspectRatio = aspect;
@@ -252,7 +257,7 @@ public class RunYOLO8n : MonoBehaviour
                 Graphics.Blit(outputTexture, targetRT, shaderMaterial);
                 Graphics.Blit(targetRT, targetRT, new Vector2(1f/aspect, 1f), new Vector2(0,0));
             #endif
-            displayImage.texture = targetRT;
+            // displayImage.texture = targetRT;
         }
         else return;
 
@@ -279,14 +284,14 @@ public class RunYOLO8n : MonoBehaviour
         
         output.MakeReadable();
         labelIDs.MakeReadable();
-
+        
         float displayWidth = displayImage.rectTransform.rect.width;
         float displayHeight = displayImage.rectTransform.rect.height;
 
         float scaleX = displayWidth / imageWidth;
         float scaleY = displayHeight / imageHeight;
 
-        //Draw the bounding boxes
+        // Draw the bounding boxes
         for (int n = 0; n < output.shape[1]; n++)
         {
             var box = new BoundingBox
@@ -295,7 +300,7 @@ public class RunYOLO8n : MonoBehaviour
                 centerY = output[0, n, 1] * scaleY - displayHeight / 2,
                 width = output[0, n, 2] * scaleX,
                 height = output[0, n, 3] * scaleY,
-                label = labels[labelIDs[0, 0,n]],
+                label = labels[labelIDs[0, 0, n]],
             };
             DrawBox(box, n);
         }
@@ -303,7 +308,7 @@ public class RunYOLO8n : MonoBehaviour
 
     private void DrawBox(BoundingBox box , int id)
     {
-        //Create the bounding box graphic or get from pool
+        // Create the bounding box graphic or get from pool
         GameObject panel;
         bool newBbox = false;
         if (id < boxPool.Count)
@@ -313,7 +318,7 @@ public class RunYOLO8n : MonoBehaviour
         }
         else
         {
-            panel = CreateNewBox(Color.magenta, Color.black);
+            panel = CreateNewBox(Color.magenta);
             newBbox = true;
         }
         //Set box position
@@ -322,6 +327,11 @@ public class RunYOLO8n : MonoBehaviour
         //Set box size
         RectTransform rt = panel.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(box.width, box.height);
+        
+        if (!placedEagle || newBbox)
+        {
+            placedEagle = eagleManager.placeEagle(box.centerX, -box.centerY);
+        }
         
         //Set label text
         if (currentLabel != box.label || newBbox)
@@ -338,14 +348,12 @@ public class RunYOLO8n : MonoBehaviour
                 {
                     textChildren[i].text = type[i] + values[i] + "g";
                 }
-
                 currentLabel = box.label;
-                eagleManager.placeEagle(box.centerX, -box.centerY);
             }));
         }
     }
 
-    private GameObject CreateNewBox(Color boxColor, Color textColor)
+    private GameObject CreateNewBox(Color boxColor)
     {
         //Create the box and set image
         var panel = new GameObject("ObjectBox");
@@ -364,8 +372,7 @@ public class RunYOLO8n : MonoBehaviour
 
     private void createNutritionLabel(GameObject panel)
     {
-        var nutritionLabel = Instantiate(nutritionLabelPrefab);
-        nutritionLabel.transform.SetParent(panel.transform, false);
+        var nutritionLabel = Instantiate(nutritionLabelPrefab, panel.transform);
         Canvas canvas = nutritionLabel.GetComponentInChildren<Canvas>();
         canvas.transform.localScale = new Vector3(1,1,1);
         
@@ -386,7 +393,7 @@ public class RunYOLO8n : MonoBehaviour
         rt.anchoredPosition = new Vector2(0f, nutritionLabelHeight);
     }
 
-    public void ClearAnnotations()
+    private void ClearAnnotations()
     {
         foreach(var box in boxPool)
         {

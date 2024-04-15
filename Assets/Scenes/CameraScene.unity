@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Camera: {fileID: 1269058212}
   m_OriginBaseGameObject: {fileID: 437984765}
   m_CameraFloorOffsetObject: {fileID: 1710771238}
-  m_RequestedTrackingOriginMode: 1
+  m_RequestedTrackingOriginMode: 0
   m_CameraYOffset: 1.1176
 --- !u!4 &437984767
 Transform:
@@ -184,8 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 5148387780298645084, guid: 12a71c4be23174973bbbd4072329f8e4, type: 3}
-  m_DetectionMode: 1
+  m_PlanePrefab: {fileID: 7637114190931837890, guid: 21369bbb161ff454c9e45db200c7c3ee, type: 3}
+  m_DetectionMode: -1
 --- !u!114 &437984769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef7463d55f9b462893e1fbb982a18ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eagle: {fileID: 100000, guid: 221f97476fc29794da96ee45e1fb7f2e, type: 3}
+  eagle: {fileID: 1879581886640764, guid: 8a98dc7c3255b1f43b1885fecabf80f2, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958240456}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194230}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -599,7 +600,24 @@ MonoBehaviour:
   fit: {fileID: 958240460}
   shaderMaterial: {fileID: 2100000, guid: 5214a1f54516b497b8d4fd950822ef7e, type: 2}
   DesireResolution: {x: 1170, y: 2532}
-  eagleManager: {fileID: 0}
+  eagleManager: {fileID: 963194231}
+  eagle: {fileID: 1879581886640764, guid: 8a98dc7c3255b1f43b1885fecabf80f2, type: 3}
+  xrOrigin: {fileID: 437984765}
+  arSession: {fileID: 1786743947}
+  sceneCamera: {fileID: 963194225}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef7463d55f9b462893e1fbb982a18ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eagle: {fileID: 1879581886640764, guid: 8a98dc7c3255b1f43b1885fecabf80f2, type: 3}
 --- !u!1 &1269058206
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +653,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2005936634}
   m_Father: {fileID: 1710771239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1269058208
@@ -866,6 +885,10 @@ MonoBehaviour:
   shaderMaterial: {fileID: 2100000, guid: 5214a1f54516b497b8d4fd950822ef7e, type: 2}
   DesireResolution: {x: 1170, y: 2532}
   eagleManager: {fileID: 437984770}
+  eagle: {fileID: 1879581886640764, guid: 8a98dc7c3255b1f43b1885fecabf80f2, type: 3}
+  xrOrigin: {fileID: 437984765}
+  arSession: {fileID: 1786743947}
+  sceneCamera: {fileID: 963194225}
 --- !u!1 &1710771238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,7 +1076,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 958240457}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269058207}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1067,6 +1090,5 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 775046559}
-  - {fileID: 2005936634}
   - {fileID: 437984767}
   - {fileID: 1786743950}
