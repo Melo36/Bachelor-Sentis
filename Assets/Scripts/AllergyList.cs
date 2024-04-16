@@ -5,19 +5,25 @@ using UnityEngine;
 
 public class AllergyList : MonoBehaviour
 {
-    public static AllergyList instance { get; private set; }
-    public static List<string> allergyList = new List<string>();
-    public static List<string> defficiencyList = new List<string>();
+    public static AllergyList _instance;
+    public List<string> allergyList;
+    public List<string> deficiencyList;
+
+    public static AllergyList Instance
+    {
+        get {
+            if (_instance == null) {
+                
+            }
+            return _instance;
+        }
+    }
+    
 
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            instance = this;
-        }
+        _instance = this;
+        allergyList = new List<string>();
+        deficiencyList = new List<string>();
     }
 }

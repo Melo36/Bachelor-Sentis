@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
@@ -18,6 +19,7 @@ public class PlaceEagleManager : MonoBehaviour
     private List<ARRaycastHit> raycastHits = new List<ARRaycastHit>();
     private bool eagleExists;
     [SerializeField] private Camera arCamera;
+    private GameObject instantiatedEagle;
     
     void Start()
     {
@@ -27,21 +29,33 @@ public class PlaceEagleManager : MonoBehaviour
 
     private void Update()
     {
-        /*if (Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            bool collision = arRaycastManager.Raycast(touch.position, raycastHits, TrackableType.PlaneWithinPolygon);
-            if (collision && raycastHits.Count > 0 && touch.phase == TouchPhase.Began)
+
+            // Check if the touch phase is "Began" (user just touched the screen)
+            if (touch.phase == TouchPhase.Began)
             {
-                Quaternion rotation = Quaternion.Euler(0, 180, 0);
-                GameObject instantiatedEagle = Instantiate(eagle, raycastHits[0].pose.position, rotation);
+                // Perform a raycast from the touch position
+                Ray ray = arCamera.ScreenPointToRay(touch.position);
+                RaycastHit hit;
+
+                // Check if the raycast hits any GameObject
+                if (Physics.Raycast(ray, out hit))
+                {
+                    // Check if the hit GameObject has a Collider (e.g., it's interactable)
+                    Collider collider = hit.collider;
+                    if (collider != null && collider.CompareTag("Eagle"))
+                    {
+                        // The user clicked on the eagle GameObject
+                        Debug.Log("Eagle Clicked!");
+
+                        // Perform desired actions (e.g., play sound, show UI, etc.)
+                        // You can add your custom interaction logic here
+                    }
+                }
             }
-            foreach (var plane in arPlaneManager.trackables)
-            {
-                plane.gameObject.SetActive(false);
-            }
-            arPlaneManager.enabled = false;
-        }*/
+        }
     }
 
     public bool placeEagle(float centerX, float centerY)
@@ -49,10 +63,15 @@ public class PlaceEagleManager : MonoBehaviour
         bool collision = arRaycastManager.Raycast(new Vector2(centerX, -centerY), raycastHits, TrackableType.PlaneWithinPolygon);
         if (collision && raycastHits.Count > 0)
         {
+            if (instantiatedEagle != null)
+            {
+                Destroy(instantiatedEagle);
+            }
             Vector3 eaglePosition = raycastHits[0].pose.position;
             Vector3 direction = arCamera.transform.position - eaglePosition;
             Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-            GameObject instantiatedEagle = Instantiate(eagle, eaglePosition, rotation);
+            instantiatedEagle = Instantiate(eagle, eaglePosition, rotation);
+            Debug.Log("Instantiated eagle at " + instantiatedEagle.transform.position);
             
             foreach (var plane in arPlaneManager.trackables)
             {

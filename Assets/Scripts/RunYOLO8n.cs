@@ -76,6 +76,9 @@ public class RunYOLO8n : MonoBehaviour
     [SerializeField] private GameObject arSession;
     [SerializeField] private GameObject sceneCamera;
 
+    private List<string> allergyList;
+    private string[] ingredients;
+
     private bool placedEagle = false;
 
     //bounding box data
@@ -111,6 +114,8 @@ public class RunYOLO8n : MonoBehaviour
 
         foodFacts = GetComponent<FoodFacts>();
 
+        allergyList = AllergyList.Instance.allergyList;
+        
         #if UNITY_EDITOR_OSX
         arSession.SetActive(false);
         xrOrigin.SetActive(false);
@@ -328,9 +333,10 @@ public class RunYOLO8n : MonoBehaviour
         RectTransform rt = panel.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(box.width, box.height);
         
-        if (!placedEagle || newBbox)
+        if (!placedEagle || newBbox || currentLabel != box.label)
         {
-            placedEagle = eagleManager.placeEagle(box.centerX, -box.centerY);
+            placedEagle = eagleManager.placeEagle(box.centerX, box.centerY);
+            placedEagle = true;
         }
         
         //Set label text
@@ -344,10 +350,14 @@ public class RunYOLO8n : MonoBehaviour
                 pieChart.setValues(values);
                 var textChildren = panel.GetComponentsInChildren<TextMeshProUGUI>();
                 string[] type = { "Fett: ", "Kohlenhydrate: ", "Eiweiß: " };
-                for (int i = 0; i < textChildren.Length; i++)
+                for (int i = 0; i < textChildren.Length - 1; i++)
                 {
-                    textChildren[i].text = type[i] + values[i] + "g";
+                    textChildren[i + 1].text = type[i] + values[i] + "g";
                 }
+
+                ingredients = foodFacts.getIngredients().Split(",");
+
+                textChildren[0].text = (int)values[0] * 9 + (int)values[1] * 4 + (int)values[2] * 4 + " kcal";
                 currentLabel = box.label;
             }));
         }
@@ -391,6 +401,17 @@ public class RunYOLO8n : MonoBehaviour
 
         // Calculate the anchored position to align the bottom of the nutritionLabel with the top of the panel
         rt.anchoredPosition = new Vector2(0f, nutritionLabelHeight);
+
+        for (int i = 0; i < allergyList.Count; i++)
+        {
+            for (int j = 0; j < ingredients.Length; j++)
+            {
+                if (allergyList[i] == ingredients[j])
+                {
+                    Debug.Log("Found allergy");
+                }
+            }
+        }
     }
 
     private void ClearAnnotations()

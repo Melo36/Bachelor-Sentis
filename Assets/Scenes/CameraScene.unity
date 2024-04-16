@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eagle: {fileID: 1879581886640764, guid: 8a98dc7c3255b1f43b1885fecabf80f2, type: 3}
+  arCamera: {fileID: 1269058212}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eagle: {fileID: 1879581886640764, guid: 8a98dc7c3255b1f43b1885fecabf80f2, type: 3}
+  arCamera: {fileID: 0}
 --- !u!1 &1269058206
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,9 +880,9 @@ MonoBehaviour:
   boxTexture: {fileID: 1724117543, guid: e8cb0ac477c5b484fad2cb3c501268f2, type: 3}
   font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   nutritionLabelPrefab: {fileID: 818701081637494446, guid: d77b2b8514e564764b51978079f271cd, type: 3}
-  iouThreshold: 0.5
-  scoreThreshold: 0.7
-  modelAsset: {fileID: 5022602860645237092, guid: 82aebef8982a145ccbfc523bf4096759, type: 3}
+  iouThreshold: 0.75
+  scoreThreshold: 0.75
+  modelAsset: {fileID: 5022602860645237092, guid: 9b1ffdc77e18743e7a0d0cb4496cd4c2, type: 3}
   fit: {fileID: 958240460}
   shaderMaterial: {fileID: 2100000, guid: 5214a1f54516b497b8d4fd950822ef7e, type: 2}
   DesireResolution: {x: 1170, y: 2532}

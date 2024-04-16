@@ -30,6 +30,7 @@ public class FoodFacts : MonoBehaviour
         public Nutriments nutriments;
         public NutriscoreData nutriscore_data;
         public string product_name;
+        public string ingredients_text;
     }
     
     [System.Serializable]
@@ -40,6 +41,8 @@ public class FoodFacts : MonoBehaviour
         public int status;
         public string status_verbose;
     }
+
+    private string ingredientsText;
 
     
     // Start is called before the first frame update
@@ -60,7 +63,7 @@ public class FoodFacts : MonoBehaviour
     {
         string barcode = dict[productName];
         string foodFactLink = "https://world.openfoodfacts.net/api/v2/product/" + barcode 
-                                                                         + "?fields=product_name,nutriscore_data,nutriments,nutrition_grades";
+                                                                         + "?fields=product_name,nutriscore_data,nutriments,nutrition_grades,ingredients_text";
         Debug.Log(foodFactLink);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(foodFactLink))
         {
@@ -80,16 +83,17 @@ public class FoodFacts : MonoBehaviour
                     Debug.LogError(pages[page] + ": HTTP Error: " + webRequest.error);
                     break;
                 case UnityWebRequest.Result.Success:
-                    //Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                    Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
                     string facts = webRequest.downloadHandler.text;
                     ApiResponse response = JsonUtility.FromJson<ApiResponse>(facts);
-
+                    
                     if (response != null && response.product != null)
                     {
                         Nutriments productNutriments = new Nutriments();
                         productNutriments.proteins_100g = response.product.nutriments.proteins_100g;
                         productNutriments.carbohydrates_100g = response.product.nutriments.carbohydrates_100g;
                         productNutriments.fat_100g = response.product.nutriments.fat_100g;
+                        ingredientsText = response.product.ingredients_text;
                         float[] result = getNutriments(productNutriments);
                         callback?.Invoke(result);
                     }
@@ -109,5 +113,10 @@ public class FoodFacts : MonoBehaviour
         values[1] = productNutriments.carbohydrates_100g;
         values[2] = productNutriments.proteins_100g;
         return values;
+    }
+
+    public string getIngredients()
+    {
+        return ingredientsText;
     }
 }

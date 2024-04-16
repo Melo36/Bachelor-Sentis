@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -21,34 +22,34 @@ public class AllergyButton : MonoBehaviour
     private void AddAllergy()
     {
         // Button was pressed already
-        if (image.color == button.colors.selectedColor)
+        if (button.colors.selectedColor.CompareRGB(image.color))
         {
             image.color = button.colors.normalColor;
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.5f);
             if (gameObject.CompareTag("Allergy"))
             {
-                AllergyList.allergyList.Remove(text.text);
+                AllergyList.Instance.allergyList.Remove(text.text);
             }
             else
             {
-                AllergyList.defficiencyList.Remove(text.text);
+                AllergyList.Instance.deficiencyList.Remove(text.text);
             }
         }
         // Button was not pressed before
         else
         {
             image.color = button.colors.selectedColor;
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 255);
             if (gameObject.CompareTag("Allergy"))
             {
-                AllergyList.allergyList.Add(text.text);
+                Debug.Log("Füge hinzu");
+                AllergyList.Instance.allergyList.Add(text.text);
             }
             else
             {
-                AllergyList.defficiencyList.Add(text.text);
+                AllergyList.Instance.deficiencyList.Add(text.text);
             }
         }
-
-        
-        
     }
     
 }
