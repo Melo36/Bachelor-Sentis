@@ -35,7 +35,8 @@ public class RunYOLO8n : MonoBehaviour
 
     [SerializeField]
     private GameObject nutritionLabelPrefab;
-
+    [SerializeField]
+    private GameObject allergyLabelPrefab;
 
     //Image size for the model
     private const int imageWidth = 640;
@@ -77,9 +78,11 @@ public class RunYOLO8n : MonoBehaviour
     [SerializeField] private GameObject sceneCamera;
 
     private List<string> allergyList;
-    private string[] ingredients;
+    private string ingredientsArray;
+    private List<string> foundAllergies = new List<string>();
 
     private bool placedEagle = false;
+    private bool hasIngredients = false;
 
     //bounding box data
     public struct BoundingBox
@@ -311,56 +314,85 @@ public class RunYOLO8n : MonoBehaviour
         }
     }
 
-    private void DrawBox(BoundingBox box , int id)
+    private void DrawBox(BoundingBox box, int id)
     {
         // Create the bounding box graphic or get from pool
+        float[] values;
         GameObject panel;
         bool newBbox = false;
-        if (id < boxPool.Count)
-        {
-            panel = boxPool[id];
-            panel.SetActive(true);
-        }
-        else
-        {
-            panel = CreateNewBox(Color.magenta);
-            newBbox = true;
-        }
-        //Set box position
-        panel.transform.localPosition = new Vector3(box.centerX, -box.centerY);
 
-        //Set box size
-        RectTransform rt = panel.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(box.width, box.height);
-        
-        if (!placedEagle || newBbox || currentLabel != box.label)
-        {
-            placedEagle = eagleManager.placeEagle(box.centerX, box.centerY);
-            placedEagle = true;
-        }
-        
-        //Set label text
-        if (currentLabel != box.label || newBbox)
+        if (currentLabel != box.label || !hasIngredients)
         {
             StartCoroutine(foodFacts.GetRequest(box.label, result =>
             {
-                // Handle the result here
-                float[] values = result;
-                PieChart pieChart = panel.GetComponentInChildren<PieChart>();
-                pieChart.setValues(values);
-                var textChildren = panel.GetComponentsInChildren<TextMeshProUGUI>();
-                string[] type = { "Fett: ", "Kohlenhydrate: ", "Eiweiß: " };
-                for (int i = 0; i < textChildren.Length - 1; i++)
+                values = result;
+                ingredientsArray = foodFacts.getIngredients();
+                if (id < boxPool.Count)
                 {
-                    textChildren[i + 1].text = type[i] + values[i] + "g";
+                    panel = boxPool[id];
+                    panel.SetActive(true);
+                }
+                else
+                {
+                    panel = CreateNewBox(Color.magenta);
+                    newBbox = true;
                 }
 
-                ingredients = foodFacts.getIngredients().Split(",");
+                //Set box position
+                panel.transform.localPosition = new Vector3(box.centerX, -box.centerY);
 
-                textChildren[0].text = (int)values[0] * 9 + (int)values[1] * 4 + (int)values[2] * 4 + " kcal";
-                currentLabel = box.label;
+                //Set box size
+                RectTransform rt = panel.GetComponent<RectTransform>();
+                rt.sizeDelta = new Vector2(box.width, box.height);
+
+                if (!placedEagle || newBbox || currentLabel != box.label)
+                {
+                    placedEagle = eagleManager.placeEagle(box.centerX, box.centerY);
+                }
+
+                //Set label text
+                if (currentLabel != box.label || newBbox || !hasIngredients)
+                {
+                    // Handle the result here
+                    PieChart pieChart = panel.GetComponentInChildren<PieChart>();
+                    pieChart.setValues(values);
+                    var textChildren = panel.GetComponentsInChildren<TextMeshProUGUI>();
+                    string[] type = { "Fett: ", "Kohlenhydrate: ", "Eiweiß: " };
+                    for (int i = 0; i < 3; i++)
+                    {
+                        textChildren[i + 1].text = type[i] + values[i] + "g";
+                    }
+
+                    //ingredientsArray = foodFacts.getIngredients();
+                    textChildren[0].text = (int)values[0] * 9 + (int)values[1] * 4 + (int)values[2] * 4 + " kcal";
+                    currentLabel = box.label;
+                    hasIngredients = true;
+                }
             }));
         }
+        else
+        {
+            if (id < boxPool.Count)
+            {
+                panel = boxPool[id];
+                panel.SetActive(true);
+            }
+            else
+            {
+                panel = CreateNewBox(Color.magenta);
+                newBbox = true;
+            }
+
+            //Set box position
+            panel.transform.localPosition = new Vector3(box.centerX, -box.centerY);
+
+            //Set box size
+            RectTransform rt = panel.GetComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(box.width, box.height);
+            currentLabel = box.label;
+        }
+
+        
     }
 
     private GameObject CreateNewBox(Color boxColor)
@@ -383,6 +415,7 @@ public class RunYOLO8n : MonoBehaviour
     private void createNutritionLabel(GameObject panel)
     {
         var nutritionLabel = Instantiate(nutritionLabelPrefab, panel.transform);
+        var allergyLabel = nutritionLabel.transform.GetChild(1);
         Canvas canvas = nutritionLabel.GetComponentInChildren<Canvas>();
         canvas.transform.localScale = new Vector3(1,1,1);
         
@@ -402,14 +435,29 @@ public class RunYOLO8n : MonoBehaviour
         // Calculate the anchored position to align the bottom of the nutritionLabel with the top of the panel
         rt.anchoredPosition = new Vector2(0f, nutritionLabelHeight);
 
+        if (ingredientsArray == null || allergyList == null)
+        {
+            Debug.Log("ingredients or allergyList null");
+            return;
+        }
+        
         for (int i = 0; i < allergyList.Count; i++)
         {
-            for (int j = 0; j < ingredients.Length; j++)
+            if (ingredientsArray.Contains(allergyList[i]))
             {
-                if (allergyList[i] == ingredients[j])
-                {
-                    Debug.Log("Found allergy");
-                }
+                foundAllergies.Add(allergyList[i]);
+                Debug.Log("Found allergy");
+            }
+        }
+
+        if (foundAllergies.Count > 0)
+        {
+            allergyLabel.gameObject.SetActive(true);
+            for (int i = 0; i < foundAllergies.Count; i++)
+            {
+                GameObject child = allergyLabel.transform.GetChild(i + 1).gameObject;
+                child.GetComponentInChildren<TextMeshProUGUI>().text = foundAllergies[i];
+                child.SetActive(true);
             }
         }
     }

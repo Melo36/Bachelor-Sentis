@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3046206492516883268}
   - component: {fileID: 1454834666729029784}
   - component: {fileID: 5041186629455771718}
-  - component: {fileID: 2876666617143142249}
   m_Layer: 5
   m_Name: CheckmarkText
   m_TagString: Allergy
@@ -122,18 +121,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2876666617143142249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5956328783627565479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3fb3471a96094825a0e24dc55c09f05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7363855651386922491
 GameObject:
   m_ObjectHideFlags: 0
