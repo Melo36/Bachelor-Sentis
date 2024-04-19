@@ -81,15 +81,20 @@ public class PlaceEagleManager : MonoBehaviour
                         string minNutriGrade = "e";
                         foreach (KeyValuePair<string, DetailedNutrition> choice in detailedNutritionDict)
                         {
+                            if (choice.Value.allergies != null)
+                            {
+                                continue;
+                            }
                             if (choice.Value.nutriscore.CompareTo(minNutriGrade) < 0)
                             {
-                                if (choice.Value.allergies.Count == 0)
-                                {
-                                    continue;
-                                }
                                 minNutriGrade = choice.Value.nutriscore;
                                 healthiestChoice = choice.Value;
                             }
+                        }
+
+                        if (healthiestChoice == null)
+                        {
+                            healthiestChoice = detailedNutritionDict.First().Value;
                         }
 
                         if (healthiestChoice != null)
@@ -99,6 +104,27 @@ public class PlaceEagleManager : MonoBehaviour
                             fettText.text = "Fett: " + healthiestChoice.nutritionValues[0];
                             kohlenText.text = "Kohlenhydrate: " + healthiestChoice.nutritionValues[1];
                             eiweisText.text = "Eiweiß: " + healthiestChoice.nutritionValues[2];
+                            switch (healthiestChoice.productName)
+                            {
+                                case "Ferrero Küsschen":
+                                    productImage.texture = textureArray[0];
+                                    break;
+                                case "Butterkeks 30% weniger Zucker":
+                                    productImage.texture = textureArray[1];
+                                    break;
+                                case "Leibniz Kakao Keks":
+                                    productImage.texture = textureArray[2];
+                                    break;
+                                case "Lindt":
+                                    productImage.texture = textureArray[3];
+                                    break;
+                                case "Milka Lait Alpin":
+                                    productImage.texture = textureArray[4];
+                                    break;
+                                default:
+                                    break;
+                            }
+                            productImage.SetNativeSize();
                         }
                         detailedView.SetActive(true);
                         
