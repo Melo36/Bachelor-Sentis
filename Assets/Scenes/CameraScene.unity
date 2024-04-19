@@ -379,6 +379,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210429351}
   m_CullTransparentMesh: 1
+--- !u!1 &292862235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 292862236}
+  - component: {fileID: 292862238}
+  - component: {fileID: 292862237}
+  m_Layer: 5
+  m_Name: NutriScoreImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &292862236
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292862235}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1342037911}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -751, y: -1321}
+  m_SizeDelta: {x: 499, y: 271}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &292862237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292862235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: e312aafd5188f418699741676cf3018e, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &292862238
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292862235}
+  m_CullTransparentMesh: 1
 --- !u!1 &338562931
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,8 +672,9 @@ MonoBehaviour:
   productName: {fileID: 107812468}
   productImage: {fileID: 210429353}
   pieChart: {fileID: 54090327}
+  calorieText: {fileID: 1805041676}
   fettText: {fileID: 1822258257}
-  kohlenText: {fileID: 0}
+  kohlenText: {fileID: 966412433}
   eiweisText: {fileID: 1233397871}
   textureArray:
   - {fileID: 2800000, guid: cdfc809ebe18f45e4a63afb4804c5960, type: 3}
@@ -609,6 +682,13 @@ MonoBehaviour:
   - {fileID: 2800000, guid: e3c581ad42fc944fba4b662b610e9967, type: 3}
   - {fileID: 2800000, guid: 961a8c0da1c964be6a450d54256f5f9f, type: 3}
   - {fileID: 2800000, guid: 2e90582679ba248a7b02cd4c9e09074d, type: 3}
+  nutriscoreTextures:
+  - {fileID: 2800000, guid: e312aafd5188f418699741676cf3018e, type: 3}
+  - {fileID: 2800000, guid: 6a719bd6b627b4e2190a06f023a23705, type: 3}
+  - {fileID: 2800000, guid: 569784898836c48f0b065ec9b2ebdb59, type: 3}
+  - {fileID: 2800000, guid: 68b960e7be37844f7b95ee53009768f2, type: 3}
+  - {fileID: 2800000, guid: 68645fe2954514599b9a63afe6990c38, type: 3}
+  nutriscoreImage: {fileID: 292862237}
 --- !u!1 &448366179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,6 +1311,7 @@ MonoBehaviour:
   productName: {fileID: 0}
   productImage: {fileID: 0}
   pieChart: {fileID: 0}
+  calorieText: {fileID: 0}
   fettText: {fileID: 0}
   kohlenText: {fileID: 0}
   eiweisText: {fileID: 0}
@@ -1240,6 +1321,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  nutriscoreTextures:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  nutriscoreImage: {fileID: 0}
 --- !u!1 &966412431
 GameObject:
   m_ObjectHideFlags: 0
@@ -1867,6 +1955,7 @@ RectTransform:
   - {fileID: 1822258256}
   - {fileID: 966412432}
   - {fileID: 1233397870}
+  - {fileID: 292862236}
   - {fileID: 338562932}
   m_Father: {fileID: 2005936634}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1888,7 +1977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.9411765}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

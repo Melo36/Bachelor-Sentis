@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetailedNutrition : MonoBehaviour
+public class DetailedNutrition
 {
     public string productName;
     public float[] nutritionValues;

@@ -34,11 +34,15 @@ public class PlaceEagleManager : MonoBehaviour
 
     public RawImage productImage;
     public PieChart pieChart;
+    public TextMeshProUGUI calorieText;
     public TextMeshProUGUI fettText;
     public TextMeshProUGUI kohlenText;
     public TextMeshProUGUI eiweisText;
 
     public Texture[] textureArray = new Texture[5];
+    public Texture[] nutriscoreTextures = new Texture[5];
+    public RawImage nutriscoreImage;
+    private Dictionary<string, Texture> nutriDict;
     
     
     void Start()
@@ -47,6 +51,13 @@ public class PlaceEagleManager : MonoBehaviour
         arPlaneManager = GetComponent<ARPlaneManager>();
         eagle.GetComponentInChildren<BillboardText>().mainCamera = arCamera;
         closeButton.onClick.AddListener(closeDetailedView);
+
+        nutriDict = new Dictionary<string, Texture>();
+        nutriDict.Add("a", nutriscoreTextures[0]);
+        nutriDict.Add("b", nutriscoreTextures[1]);
+        nutriDict.Add("c", nutriscoreTextures[2]);
+        nutriDict.Add("d", nutriscoreTextures[3]);
+        nutriDict.Add("e", nutriscoreTextures[4]);
     }
 
     private void closeDetailedView()
@@ -77,21 +88,23 @@ public class PlaceEagleManager : MonoBehaviour
                         // The user clicked on the eagle GameObject
                         Debug.Log("Eagle Clicked!");
                         Dictionary<string, DetailedNutrition> detailedNutritionDict = yolov8.detailedNutritionDict;
+                        
                         DetailedNutrition healthiestChoice = null;
                         string minNutriGrade = "e";
                         foreach (KeyValuePair<string, DetailedNutrition> choice in detailedNutritionDict)
                         {
-                            if (choice.Value.allergies != null)
+                            if (choice.Value.allergies.Count > 0)
                             {
                                 continue;
                             }
-                            if (choice.Value.nutriscore.CompareTo(minNutriGrade) < 0)
+                            Debug.Log(choice.Value.productName + " " + choice.Value.nutriscore);
+                            if (string.Compare(choice.Value.nutriscore, minNutriGrade) < 0)
                             {
                                 minNutriGrade = choice.Value.nutriscore;
                                 healthiestChoice = choice.Value;
                             }
                         }
-
+                        
                         if (healthiestChoice == null)
                         {
                             healthiestChoice = detailedNutritionDict.First().Value;
@@ -104,6 +117,9 @@ public class PlaceEagleManager : MonoBehaviour
                             fettText.text = "Fett: " + healthiestChoice.nutritionValues[0];
                             kohlenText.text = "Kohlenhydrate: " + healthiestChoice.nutritionValues[1];
                             eiweisText.text = "Eiweiß: " + healthiestChoice.nutritionValues[2];
+                            calorieText.text = (int)healthiestChoice.nutritionValues[0] * 9 + (int)healthiestChoice.nutritionValues[1] * 4 + (int)healthiestChoice.nutritionValues[2] * 4 + " kcal";
+                            nutriscoreImage.texture = nutriDict[healthiestChoice.nutriscore];
+                            nutriscoreImage.transform.localScale = new Vector3(2, 2);
                             switch (healthiestChoice.productName)
                             {
                                 case "Ferrero Küsschen":
@@ -121,13 +137,10 @@ public class PlaceEagleManager : MonoBehaviour
                                 case "Milka Lait Alpin":
                                     productImage.texture = textureArray[4];
                                     break;
-                                default:
-                                    break;
                             }
                             productImage.SetNativeSize();
                         }
                         detailedView.SetActive(true);
-                        
                     }
                 }
             }

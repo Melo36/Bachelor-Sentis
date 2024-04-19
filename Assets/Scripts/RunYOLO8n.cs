@@ -360,6 +360,7 @@ public class RunYOLO8n : MonoBehaviour
                     string productName = foodFacts.getProductName();
                     if (!detailedNutritionDict.ContainsKey(productName))
                     {
+                        Debug.Log("Setting value to dict " + productName);
                         detailedNutritionDict.Add(productName, new DetailedNutrition(productName, values, foodFacts.getNutriGrade()));
                     }
                     pieChart.setValues(values);
@@ -370,7 +371,6 @@ public class RunYOLO8n : MonoBehaviour
                         textChildren[i + 1].text = type[i] + values[i] + "g";
                     }
 
-                    //ingredientsArray = foodFacts.getIngredients();
                     textChildren[0].text = (int)values[0] * 9 + (int)values[1] * 4 + (int)values[2] * 4 + " kcal";
                     currentLabel = box.label;
                     hasIngredients = true;
@@ -462,7 +462,7 @@ public class RunYOLO8n : MonoBehaviour
             allergyLabel.gameObject.SetActive(true);
             for (int i = 0; i < foundAllergies.Count; i++)
             {
-                detailedNutritionDict[label].allergies.Add(foundAllergies[i]); 
+                detailedNutritionDict[label].allergies.Add(foundAllergies[i]);
                 GameObject child = allergyLabel.transform.GetChild(i + 1).gameObject;
                 child.GetComponentInChildren<TextMeshProUGUI>().text = foundAllergies[i];
                 child.SetActive(true);
