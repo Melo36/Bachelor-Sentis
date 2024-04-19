@@ -13,12 +13,10 @@ public class AllergyList : MonoBehaviour
     {
         get {
             if (_instance == null) {
-                
             }
             return _instance;
         }
     }
-    
 
     private void Awake()
     {

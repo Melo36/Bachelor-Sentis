@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
 using UnityEngine;
@@ -25,6 +26,20 @@ public class PlaceEagleManager : MonoBehaviour
     private GameObject detailedView;
     [SerializeField]
     private Button closeButton;
+
+    [SerializeField] private RunYOLO8n yolov8;
+
+    [Header("Detail Overview Settings")] 
+    public TextMeshProUGUI productName;
+
+    public RawImage productImage;
+    public PieChart pieChart;
+    public TextMeshProUGUI fettText;
+    public TextMeshProUGUI kohlenText;
+    public TextMeshProUGUI eiweisText;
+
+    public Texture[] textureArray = new Texture[5];
+    
     
     void Start()
     {
@@ -61,9 +76,32 @@ public class PlaceEagleManager : MonoBehaviour
                     {
                         // The user clicked on the eagle GameObject
                         Debug.Log("Eagle Clicked!");
+                        Dictionary<string, DetailedNutrition> detailedNutritionDict = yolov8.detailedNutritionDict;
+                        DetailedNutrition healthiestChoice = null;
+                        string minNutriGrade = "e";
+                        foreach (KeyValuePair<string, DetailedNutrition> choice in detailedNutritionDict)
+                        {
+                            if (choice.Value.nutriscore.CompareTo(minNutriGrade) < 0)
+                            {
+                                if (choice.Value.allergies.Count == 0)
+                                {
+                                    continue;
+                                }
+                                minNutriGrade = choice.Value.nutriscore;
+                                healthiestChoice = choice.Value;
+                            }
+                        }
+
+                        if (healthiestChoice != null)
+                        {
+                            productName.text = healthiestChoice.productName;
+                            pieChart.setValues(healthiestChoice.nutritionValues);
+                            fettText.text = "Fett: " + healthiestChoice.nutritionValues[0];
+                            kohlenText.text = "Kohlenhydrate: " + healthiestChoice.nutritionValues[1];
+                            eiweisText.text = "Eiweiß: " + healthiestChoice.nutritionValues[2];
+                        }
                         detailedView.SetActive(true);
-                        // Perform desired actions (e.g., play sound, show UI, etc.)
-                        // You can add your custom interaction logic here
+                        
                     }
                 }
             }

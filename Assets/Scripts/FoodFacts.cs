@@ -19,9 +19,7 @@ public class FoodFacts : MonoBehaviour
     [System.Serializable]
     public class NutriscoreData
     {
-        public float proteins;
-        public float carbohydrates;
-        public float fat;
+        public string grade; // Nutriscore grade
     }
 
     [System.Serializable]
@@ -43,6 +41,8 @@ public class FoodFacts : MonoBehaviour
     }
 
     private string ingredientsText;
+    private string groceryName;
+    private string nutriGrade;
 
     
     // Start is called before the first frame update
@@ -94,6 +94,8 @@ public class FoodFacts : MonoBehaviour
                         productNutriments.carbohydrates_100g = response.product.nutriments.carbohydrates_100g;
                         productNutriments.fat_100g = response.product.nutriments.fat_100g;
                         ingredientsText = response.product.ingredients_text;
+                        groceryName = response.product.product_name;
+                        nutriGrade = response.product.nutriscore_data.grade;
                         float[] result = getNutriments(productNutriments);
                         callback?.Invoke(result);
                     }
@@ -118,5 +120,15 @@ public class FoodFacts : MonoBehaviour
     public string getIngredients()
     {
         return ingredientsText;
+    }
+
+    public string getProductName()
+    {
+        return groceryName;
+    }
+
+    public string getNutriGrade()
+    {
+        return nutriGrade;
     }
 }

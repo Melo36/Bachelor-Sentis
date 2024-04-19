@@ -84,6 +84,8 @@ public class RunYOLO8n : MonoBehaviour
     private bool placedEagle = false;
     private bool hasIngredients = false;
 
+    public Dictionary<string, DetailedNutrition> detailedNutritionDict = new Dictionary<string, DetailedNutrition>();
+
     //bounding box data
     public struct BoundingBox
     {
@@ -334,7 +336,7 @@ public class RunYOLO8n : MonoBehaviour
                 }
                 else
                 {
-                    panel = CreateNewBox(Color.magenta);
+                    panel = CreateNewBox(Color.magenta, box.label);
                     newBbox = true;
                 }
 
@@ -355,6 +357,11 @@ public class RunYOLO8n : MonoBehaviour
                 {
                     // Handle the result here
                     PieChart pieChart = panel.GetComponentInChildren<PieChart>();
+                    string productName = foodFacts.getProductName();
+                    if (!detailedNutritionDict.ContainsKey(productName))
+                    {
+                        detailedNutritionDict.Add(productName, new DetailedNutrition(productName, values, foodFacts.getNutriGrade()));
+                    }
                     pieChart.setValues(values);
                     var textChildren = panel.GetComponentsInChildren<TextMeshProUGUI>();
                     string[] type = { "Fett: ", "Kohlenhydrate: ", "Eiweiß: " };
@@ -379,7 +386,7 @@ public class RunYOLO8n : MonoBehaviour
             }
             else
             {
-                panel = CreateNewBox(Color.magenta);
+                panel = CreateNewBox(Color.magenta, box.label);
                 newBbox = true;
             }
 
@@ -395,7 +402,7 @@ public class RunYOLO8n : MonoBehaviour
         
     }
 
-    private GameObject CreateNewBox(Color boxColor)
+    private GameObject CreateNewBox(Color boxColor, string label)
     {
         //Create the box and set image
         var panel = new GameObject("ObjectBox");
@@ -406,13 +413,13 @@ public class RunYOLO8n : MonoBehaviour
         img.type = Image.Type.Sliced;
         panel.transform.SetParent(displayLocation, false);
 
-        createNutritionLabel(panel);
+        createNutritionLabel(panel, label);
 
         boxPool.Add(panel);
         return panel;
     }
 
-    private void createNutritionLabel(GameObject panel)
+    private void createNutritionLabel(GameObject panel, string label)
     {
         var nutritionLabel = Instantiate(nutritionLabelPrefab, panel.transform);
         var allergyLabel = nutritionLabel.transform.GetChild(1);
@@ -455,6 +462,7 @@ public class RunYOLO8n : MonoBehaviour
             allergyLabel.gameObject.SetActive(true);
             for (int i = 0; i < foundAllergies.Count; i++)
             {
+                detailedNutritionDict[label].allergies.Add(foundAllergies[i]); 
                 GameObject child = allergyLabel.transform.GetChild(i + 1).gameObject;
                 child.GetComponentInChildren<TextMeshProUGUI>().text = foundAllergies[i];
                 child.SetActive(true);
