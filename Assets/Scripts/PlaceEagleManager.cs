@@ -20,14 +20,13 @@ public class PlaceEagleManager : MonoBehaviour
     private bool eagleExists;
     [SerializeField] private Camera arCamera;
     private GameObject instantiatedEagle;
-    [SerializeField] private GameObject eagleText;
     [SerializeField] private Canvas worldSpaceCanvas;
     
     void Start()
     {
         arRaycastManager = GetComponent<ARRaycastManager>();
         arPlaneManager = GetComponent<ARPlaneManager>();
-        eagleText.GetComponent<BillboardText>().mainCamera = arCamera;
+        eagle.GetComponentInChildren<BillboardText>().mainCamera = arCamera;
     }
 
     private void Update()
@@ -74,9 +73,6 @@ public class PlaceEagleManager : MonoBehaviour
             Vector3 direction = arCamera.transform.position - eaglePosition;
             Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
             instantiatedEagle = Instantiate(eagle, eaglePosition, rotation);
-            GameObject eagleTextField = Instantiate(eagleText, worldSpaceCanvas.transform);
-            RectTransform rt = eagleTextField.GetComponent<RectTransform>();
-            rt.position = instantiatedEagle.transform.position + new Vector3(0f, 1.5f, 0f); // Example offset position
             
             foreach (var plane in arPlaneManager.trackables)
             {
