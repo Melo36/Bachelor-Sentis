@@ -1,0 +1,712 @@
+fileFormatVersion: 2
+guid: 6fd22f54b4a8045248ef0e316608cad8
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: leibniz_butter_0
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 1453
+        width: 22
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6c428d0c923d4de49c9397876b68940
+      internalID: -1561390080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_1
+      rect:
+        serializedVersion: 2
+        x: 809
+        y: 1453
+        width: 19
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b71c1a737fd04f6bbc6751c2f36008a
+      internalID: -1178344687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_2
+      rect:
+        serializedVersion: 2
+        x: 839
+        y: 1456
+        width: 74
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d578fba80a7464d4cae1a4a1bab0d9e4
+      internalID: 1134379006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_3
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 1460
+        width: 119
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f53ce5d085976449a9f4a2b721e5aca3
+      internalID: -1830409213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_4
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 1463
+        width: 59
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61b8b4788cc854cdfb90c5686697bd4d
+      internalID: 1815701003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_5
+      rect:
+        serializedVersion: 2
+        x: 1144
+        y: 1453
+        width: 14
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 166d3a948b5d94be2898a2d378957218
+      internalID: 1712714928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_6
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 1448
+        width: 52
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc9d8025a02f84d19ac6a4cbc2a3fd5a
+      internalID: -1633573894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_7
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 1450
+        width: 14
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3caae509bf1d44efb8a0f374b3273b1
+      internalID: -439859155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1009
+        width: 1170
+        height: 437
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a81ff02a34e6244428a5863e93d21e1d
+      internalID: -98002758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_9
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 1438
+        width: 45
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d11f8c7f47b0648b7b3a802b0e31c6bf
+      internalID: 1502685798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_10
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 1441
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7603a1061b78a42cd8954b83f2802594
+      internalID: 349234540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_11
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 1438
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bed089f4bc9a4501b77c48a7b183c2b
+      internalID: -1218366589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_12
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 1430
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d066774ac63424f039697478feb8e8bd
+      internalID: 804844421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_13
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 1434
+        width: 89
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00cc152d1e58843c5bc3facaf8ea68b2
+      internalID: 165867511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e0774128e26c47f9995121462cc4404
+      internalID: -52575974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_15
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 1031
+        width: 4
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84f8780a50bf544e3b44601866d8e097
+      internalID: -379106860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_16
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 1024
+        width: 35
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac8c03e2d3a4542c2bb7898162a05a1f
+      internalID: 1674102507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_17
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 1031
+        width: 8
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f6fdeb3986554fae8935c4177c565d6
+      internalID: -1442383296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_18
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 1031
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f7fcc3512c04b98add9f2d0bfbac4f
+      internalID: -73686003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_19
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 1016
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0842310ceb2a6485eb5393f0201ecb9e
+      internalID: 563803578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_20
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 1024
+        width: 22
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60644df71e0254d1bbc71ba419cc117e
+      internalID: -1809878935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_21
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 1009
+        width: 38
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81aa5b0df33da46bc9e2a8f7dab7ef17
+      internalID: 549942710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_22
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 1016
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85df68183828c4d20a02f926f090be69
+      internalID: -1125893220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_23
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 1001
+        width: 79
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df2bb25f86af24fc0941a7a6e3b6c05c
+      internalID: 124743479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_24
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1009
+        width: 45
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca5cd25c2dc8f450ba18208f97d369be
+      internalID: -782651424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_butter_25
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 1001
+        width: 30
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b2ad055b46ce43bb92d3cbbbdb3a8e5
+      internalID: 737572612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5270076097f57471d9a02760cf9f3d22
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      leibniz_butter_0: -1561390080
+      leibniz_butter_1: -1178344687
+      leibniz_butter_10: 349234540
+      leibniz_butter_11: -1218366589
+      leibniz_butter_12: 804844421
+      leibniz_butter_13: 165867511
+      leibniz_butter_14: -52575974
+      leibniz_butter_15: -379106860
+      leibniz_butter_16: 1674102507
+      leibniz_butter_17: -1442383296
+      leibniz_butter_18: -73686003
+      leibniz_butter_19: 563803578
+      leibniz_butter_2: 1134379006
+      leibniz_butter_20: -1809878935
+      leibniz_butter_21: 549942710
+      leibniz_butter_22: -1125893220
+      leibniz_butter_23: 124743479
+      leibniz_butter_24: -782651424
+      leibniz_butter_25: 737572612
+      leibniz_butter_3: -1830409213
+      leibniz_butter_4: 1815701003
+      leibniz_butter_5: 1712714928
+      leibniz_butter_6: -1633573894
+      leibniz_butter_7: -439859155
+      leibniz_butter_8: -98002758
+      leibniz_butter_9: 1502685798
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

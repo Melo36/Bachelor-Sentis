@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -20,13 +21,22 @@ public class PlaceEagleManager : MonoBehaviour
     private bool eagleExists;
     [SerializeField] private Camera arCamera;
     private GameObject instantiatedEagle;
-    [SerializeField] private Canvas worldSpaceCanvas;
+    [SerializeField]
+    private GameObject detailedView;
+    [SerializeField]
+    private Button closeButton;
     
     void Start()
     {
         arRaycastManager = GetComponent<ARRaycastManager>();
         arPlaneManager = GetComponent<ARPlaneManager>();
         eagle.GetComponentInChildren<BillboardText>().mainCamera = arCamera;
+        closeButton.onClick.AddListener(closeDetailedView);
+    }
+
+    private void closeDetailedView()
+    {
+        detailedView.SetActive(false);
     }
 
     private void Update()
@@ -51,7 +61,7 @@ public class PlaceEagleManager : MonoBehaviour
                     {
                         // The user clicked on the eagle GameObject
                         Debug.Log("Eagle Clicked!");
-
+                        detailedView.SetActive(true);
                         // Perform desired actions (e.g., play sound, show UI, etc.)
                         // You can add your custom interaction logic here
                     }

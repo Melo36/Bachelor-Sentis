@@ -1,0 +1,756 @@
+fileFormatVersion: 2
+guid: e3c581ad42fc944fba4b662b610e9967
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: leibniz_kakao_0
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 1449
+        width: 148
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cd76de4f7060489aa9991628ee8e03b
+      internalID: -1136756029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_1
+      rect:
+        serializedVersion: 2
+        x: 1046
+        y: 1464
+        width: 60
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41e1f51f45640495793af9c0530ba407
+      internalID: 1727447406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_2
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 1445
+        width: 86
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a372b8a034da4dc097150de06a7d625
+      internalID: 2115058504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_3
+      rect:
+        serializedVersion: 2
+        x: 846
+        y: 1456
+        width: 22
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 845369b43d94347f6a5197dbc7b60232
+      internalID: 1057038265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_4
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 1453
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11d93305249d6483d8c0ad3cb48db3b0
+      internalID: -1154153651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_5
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 1445
+        width: 29
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 542ad5d79c9da4152809013be359b703
+      internalID: -1256430436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_6
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 1449
+        width: 37
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6518c37475683445c8732ae1d23c0d45
+      internalID: 349399688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1009
+        width: 1170
+        height: 437
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69df740348cc14ad5a65cc1dc498a000
+      internalID: 1192710983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_8
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 1437
+        width: 52
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: febccd90374e54af994ff11bd0dc24a8
+      internalID: -1612925448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_9
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 1442
+        width: 8
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ad875f0aa5f4449a88bb4199ce822b4
+      internalID: 1700981858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_10
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 1442
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbe938a8dc1b041b680b0d1d3eb8f29e
+      internalID: -1369064833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_11
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 1430
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b0430d95821d4206aa8788f7766fc22
+      internalID: -1082729107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_12
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 1434
+        width: 60
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 589c90c7cfe444235af91998642aaa39
+      internalID: 1820959434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_13
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 1435
+        width: 14
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2754e4d04a9c494c8f26a2a2d3c8f4d
+      internalID: 1046239645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1897c5d9e83a8495d8e76ae9f7565553
+      internalID: 1017503709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_15
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 1016
+        width: 5
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6b31c61b44d7469b8505fc96d23b01b
+      internalID: -1751794229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_16
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 1024
+        width: 4
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 467611cafdad24cac84de37b150202b1
+      internalID: 1354834358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_17
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 1024
+        width: 74
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50c69ed1165f348e7a5d80f71c49332a
+      internalID: -1920824166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_18
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 1031
+        width: 8
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d18addd3ee24846a79722a7571787326
+      internalID: 991669275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_19
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 1031
+        width: 29
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 088006c7561804fa79b9b21bd66ba976
+      internalID: -1178475181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_20
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 1016
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d27aa282b97148ee993c36c38299ee3
+      internalID: -1167328814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_21
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 1009
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e8d44fd838a54f748b62afa7fc72716
+      internalID: 253538225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_22
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 1016
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9776c97c3608944e2b133b5e1d2e381d
+      internalID: 555762013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_23
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 1016
+        width: 37
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ae62114544b14257ac1394faf753b38
+      internalID: -293960655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_24
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 1001
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c014b855241643d3bd42a0336e7c5c7
+      internalID: 1135606705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_25
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 1009
+        width: 44
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d657cb53eeab64c56b985d6747f402b6
+      internalID: -376417571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_26
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 1009
+        width: 23
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffe2f2a76a14e4ffeb3834b78501fcc4
+      internalID: 1059117051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leibniz_kakao_27
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 1001
+        width: 44
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24f8ca520edae48bbaf617cc747f2e9d
+      internalID: 1885452482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: ffc56527976e14c5ebdf93f7049ac91c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      leibniz_kakao_0: -1136756029
+      leibniz_kakao_1: 1727447406
+      leibniz_kakao_10: -1369064833
+      leibniz_kakao_11: -1082729107
+      leibniz_kakao_12: 1820959434
+      leibniz_kakao_13: 1046239645
+      leibniz_kakao_14: 1017503709
+      leibniz_kakao_15: -1751794229
+      leibniz_kakao_16: 1354834358
+      leibniz_kakao_17: -1920824166
+      leibniz_kakao_18: 991669275
+      leibniz_kakao_19: -1178475181
+      leibniz_kakao_2: 2115058504
+      leibniz_kakao_20: -1167328814
+      leibniz_kakao_21: 253538225
+      leibniz_kakao_22: 555762013
+      leibniz_kakao_23: -293960655
+      leibniz_kakao_24: 1135606705
+      leibniz_kakao_25: -376417571
+      leibniz_kakao_26: 1059117051
+      leibniz_kakao_27: 1885452482
+      leibniz_kakao_3: 1057038265
+      leibniz_kakao_4: -1154153651
+      leibniz_kakao_5: -1256430436
+      leibniz_kakao_6: 349399688
+      leibniz_kakao_7: 1192710983
+      leibniz_kakao_8: -1612925448
+      leibniz_kakao_9: 1700981858
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
