@@ -5,12 +5,19 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AllergyButton : MonoBehaviour
 {
     private Button button;
     private Image image;
     private TextMeshProUGUI text;
+
+    public Sprite notSelectedImage;
+    public Sprite selectedImage;
+
+    private bool isSelected = false;
+    
     void Start()
     {
         button = GetComponent<Button>();
@@ -21,13 +28,21 @@ public class AllergyButton : MonoBehaviour
 
     private void AddAllergy()
     {
-        // Button was pressed already
-        if (button.colors.selectedColor.CompareRGB(image.color))
+        if (button.image.sprite == notSelectedImage)
         {
-            image.color = button.colors.normalColor;
-            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.5f);
+            isSelected = true;
+            button.image.sprite = selectedImage;
+        }
+        else
+        {
+            isSelected = false;
+            button.image.sprite = notSelectedImage;
+        }
+        if (!isSelected)
+        {
             if (gameObject.CompareTag("Allergy"))
             {
+                Debug.Log("Entferne");
                 AllergyList.Instance.allergyList.Remove(text.text);
             }
             else
@@ -38,8 +53,6 @@ public class AllergyButton : MonoBehaviour
         // Button was not pressed before
         else
         {
-            image.color = button.colors.selectedColor;
-            image.color = new Color(image.color.r, image.color.g, image.color.b, 255);
             if (gameObject.CompareTag("Allergy"))
             {
                 Debug.Log("Füge hinzu");
