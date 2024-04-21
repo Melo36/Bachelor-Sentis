@@ -115,7 +115,7 @@ public class PlaceEagleManager : MonoBehaviour
                             productName.text = healthiestChoice.productName;
                             pieChart.setValues(healthiestChoice.nutritionValues);
                             fettText.text = "Fett                                  " + healthiestChoice.nutritionValues[0];
-                            kohlenText.text = "Kohlenhydrate                   " + healthiestChoice.nutritionValues[1];
+                            kohlenText.text = "Kohlenhydrate                 " + healthiestChoice.nutritionValues[1];
                             eiweisText.text = "Eiweiß                              " + healthiestChoice.nutritionValues[2];
                             calorieText.text = (int)healthiestChoice.nutritionValues[0] * 9 + (int)healthiestChoice.nutritionValues[1] * 4 + (int)healthiestChoice.nutritionValues[2] * 4 + " kcal";
                             nutriscoreImage.texture = nutriDict[healthiestChoice.nutriscore];
