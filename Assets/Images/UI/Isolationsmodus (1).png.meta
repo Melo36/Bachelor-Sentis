@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 569784898836c48f0b065ec9b2ebdb59
+guid: 2cff4ae3326874032aa96bf12987fee2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Nutri-score-C_0
+      name: Isolationsmodus (1)_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2880
-        height: 1560
+        width: 205
+        height: 205
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 204c7bb91bc8c414c9d628a80ddf5973
-      internalID: -1536816313
+      spriteID: bae8129748f99421b83f8b75f8d4fe1a
+      internalID: -937140773
       vertices: []
       indices: 
       edges: []
@@ -146,7 +146,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c58629a0b70704fbb8b8ba1907b6ecd9
+    spriteID: b1211dc7d865a4a65aba3fc217427ad3
     internalID: 0
     vertices: []
     indices: 
@@ -154,7 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Nutri-score-C_0: -1536816313
+      Isolationsmodus (1)_0: -937140773
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

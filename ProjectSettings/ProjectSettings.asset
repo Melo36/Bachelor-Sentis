@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: SentisTest
+  companyName: Melo36
+  productName: Einblick
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -138,7 +138,11 @@ PlayerSettings:
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: cefea944bea344d588a070abbf82453f, type: 2}
+  - {fileID: -2358329445587923880, guid: 2f10a3d43bc344bf0a93e2b369f7f157, type: 2}
+  - {fileID: 4800000, guid: e7c77f6eaab324a819efdc13b8125a39, type: 3}
+  - {fileID: 4800000, guid: 6743a50a812740be8c0aa3fccc46fae9, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -162,7 +166,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.DefaultCompany.SentisTest
     Standalone: com.DefaultCompany.SentisTest
-    iPhone: com.DefaultCompany.SentisTest
+    iPhone: com.Melo36.Einblick
   buildNumber:
     Bratwurst: 0
     Standalone: 0
@@ -289,7 +293,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: bca8b578933fe402b9f920bf0e099243, type: 3}
+      m_Icon: {fileID: 2800000, guid: 1366184f21b3548f6874dc66a129e3d5, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

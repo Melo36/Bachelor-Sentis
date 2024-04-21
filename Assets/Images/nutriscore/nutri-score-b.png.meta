@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: nutri-score-b_0
+      name: Nutri-score-B_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 498
-        height: 269
+        width: 2880
+        height: 1560
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,8 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4bf6e604664ff480a836463c509103c9
-      internalID: 845966485
+      spriteID: 593d1e556e65c4c6a8b36c0b1b1eba94
+      internalID: -266873412
       vertices: []
       indices: 
       edges: []
@@ -146,7 +146,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ee4e0846ecbae4b0b9c3ebd72a2a1526
+    spriteID: c5068e24742d047ceb81aac789c9dc7e
     internalID: 0
     vertices: []
     indices: 
@@ -154,7 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      nutri-score-b_0: 845966485
+      Nutri-score-B_0: -266873412
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

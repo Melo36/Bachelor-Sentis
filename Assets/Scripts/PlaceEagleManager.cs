@@ -114,12 +114,12 @@ public class PlaceEagleManager : MonoBehaviour
                         {
                             productName.text = healthiestChoice.productName;
                             pieChart.setValues(healthiestChoice.nutritionValues);
-                            fettText.text = "Fett: " + healthiestChoice.nutritionValues[0] + " g";
-                            kohlenText.text = "Kohlenhydrate: " + healthiestChoice.nutritionValues[1] + " g";
-                            eiweisText.text = "Eiweiß: " + healthiestChoice.nutritionValues[2] + " g";
+                            fettText.text = "Fett                                  " + healthiestChoice.nutritionValues[0];
+                            kohlenText.text = "Kohlenhydrate                   " + healthiestChoice.nutritionValues[1];
+                            eiweisText.text = "Eiweiß                              " + healthiestChoice.nutritionValues[2];
                             calorieText.text = (int)healthiestChoice.nutritionValues[0] * 9 + (int)healthiestChoice.nutritionValues[1] * 4 + (int)healthiestChoice.nutritionValues[2] * 4 + " kcal";
                             nutriscoreImage.texture = nutriDict[healthiestChoice.nutriscore];
-                            nutriscoreImage.transform.localScale = new Vector3(2, 2);
+                            nutriscoreImage.transform.localScale = new Vector3(2.5f, 2.5f);
                             switch (healthiestChoice.productName)
                             {
                                 case "Ferrero Küsschen":

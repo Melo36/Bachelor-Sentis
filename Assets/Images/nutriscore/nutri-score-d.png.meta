@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: nutri-score-d_0
+      name: Nutri-score-D_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 498
-        height: 273
+        width: 2880
+        height: 1560
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,218 +137,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4af61f41c22d1485f9215cece35724d0
-      internalID: -317289115
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_1
-      rect:
-        serializedVersion: 2
-        x: 81
-        y: 0
-        width: 5
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 124d05a73454840fbb2ae1c2928c5a44
-      internalID: -2022593568
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_2
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 0
-        width: 5
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ef3153ea1a4f94ee38f62a30f7b5f38a
-      internalID: -1918869561
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_3
-      rect:
-        serializedVersion: 2
-        x: 141
-        y: 0
-        width: 8
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dbd9814c2940e4fb085447f74384294f
-      internalID: -1233822857
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_4
-      rect:
-        serializedVersion: 2
-        x: 152
-        y: 0
-        width: 4
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e9385ba3d80dc43bda77c8ab3b9afd15
-      internalID: 2088239369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_5
-      rect:
-        serializedVersion: 2
-        x: 196
-        y: 0
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6aaf3cead39c340a891a29965eeb61fe
-      internalID: -6422266
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_6
-      rect:
-        serializedVersion: 2
-        x: 252
-        y: 0
-        width: 4
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ea67ed26765fd4bfd916c985669c37b7
-      internalID: 1903454470
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_7
-      rect:
-        serializedVersion: 2
-        x: 258
-        y: 0
-        width: 4
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9182c90661b34864a5deb4d79e79760
-      internalID: 2037271900
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_8
-      rect:
-        serializedVersion: 2
-        x: 265
-        y: 0
-        width: 4
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 855cbcb6050864e57bb15fd30ababf2c
-      internalID: 1638669203
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_9
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 0
-        width: 4
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d534a64bbd8f4463f9e055891de11a8c
-      internalID: 1244354800
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: nutri-score-d_10
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 4
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 76d24b0934fa04e90a717525ceca4ba8
-      internalID: -1025417676
+      spriteID: 39f94bbf85f224879be457f42ee268c7
+      internalID: 1630259952
       vertices: []
       indices: 
       edges: []
@@ -356,7 +146,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b90fd7c58df16405d9a5792ad74d639a
+    spriteID: 2869e09c0005a4bf0a96df6165470a33
     internalID: 0
     vertices: []
     indices: 
@@ -364,17 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      nutri-score-d_0: -317289115
-      nutri-score-d_1: -2022593568
-      nutri-score-d_10: -1025417676
-      nutri-score-d_2: -1918869561
-      nutri-score-d_3: -1233822857
-      nutri-score-d_4: 2088239369
-      nutri-score-d_5: -6422266
-      nutri-score-d_6: 1903454470
-      nutri-score-d_7: 2037271900
-      nutri-score-d_8: 1638669203
-      nutri-score-d_9: 1244354800
+      Nutri-score-D_0: 1630259952
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
