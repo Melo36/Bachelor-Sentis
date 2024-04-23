@@ -88,6 +88,9 @@ public class RunYOLO8n : MonoBehaviour
 
     public Dictionary<string, DetailedNutrition> detailedNutritionDict = new Dictionary<string, DetailedNutrition>();
 
+    private Dictionary<string, int> labelBoxPoolID = new Dictionary<string, int>();
+    private int dictIndex = -1;
+
     //bounding box data
     public struct BoundingBox
     {
@@ -294,41 +297,55 @@ public class RunYOLO8n : MonoBehaviour
 
         float scaleX = displayWidth / imageWidth;
         float scaleY = displayHeight / imageHeight;
-        BoundingBox[] bboxArray = new BoundingBox[output.shape[1]];
+        frame++;
 
-        // Draw the bounding boxes
-        // Save all bboxes in an array
-        for (int n = 0; n < output.shape[1]; n++)
-        {
-            var box = new BoundingBox
-            {
-                centerX = output[0, n, 0] * scaleX - displayWidth / 2,
-                centerY = output[0, n, 1] * scaleY - displayHeight / 2,
-                width = output[0, n, 2] * scaleX,
-                height = output[0, n, 3] * scaleY,
-                label = labels[labelIDs[0, 0, n]],
-            };
-            box.area = box.width * box.height;
-            bboxArray[n] = box;
-        }
+        int foundBoxes = output.shape[1];
 
-        // choose the bbox with the largest area
-        float maxArea = -1f;
-        int bboxIndex = -1;
-        for (int i = 0; i < bboxArray.Length; i++)
+        if (foundBoxes > 0)
         {
-            if (bboxArray[i].area > maxArea)
+            BoundingBox[] bboxArray = new BoundingBox[foundBoxes];
+
+            // Draw the bounding boxes
+            // Save all bboxes in an array
+            for (int n = 0; n < foundBoxes; n++)
             {
-                maxArea = bboxArray[i].area;
-                bboxIndex = i;
+                var box = new BoundingBox
+                {
+                    centerX = output[0, n, 0] * scaleX - displayWidth / 2,
+                    centerY = output[0, n, 1] * scaleY - displayHeight / 2,
+                    width = output[0, n, 2] * scaleX,
+                    height = output[0, n, 3] * scaleY,
+                    label = labels[labelIDs[0, 0, n]],
+                };
+                box.area = box.width * box.height;
+                bboxArray[n] = box;
             }
+
+            // choose the bbox with the largest area
+            float maxArea = -1f;
+            int bboxIndex = -1;
+            for (int i = 0; i < bboxArray.Length; i++)
+            {
+                if (bboxArray[i].area > maxArea)
+                {
+                    maxArea = bboxArray[i].area;
+                    bboxIndex = i;
+                }
+            }
+        
+            // add bbox with largest area to list
+            movingAverageBBoxes.Add(bboxArray[bboxIndex]);
         }
         
-        // add bbox with largest area to list
-        movingAverageBBoxes.Add(bboxArray[bboxIndex]);
-
-        if (movingAverageBBoxes.Count == movingAverageWindow)
+        if (frame % movingAverageWindow == 0)
         {
+            // if not enough boxes were found dont display it
+            if (movingAverageBBoxes.Count < movingAverageWindow / 2)
+            {
+                movingAverageBBoxes.Clear();
+                ClearAnnotations();
+                return;
+            }
             // Calculate average center coordinates
             // Calculate total sums
             float totalCx = movingAverageBBoxes.Sum(box => box.centerX);
@@ -341,16 +358,38 @@ public class RunYOLO8n : MonoBehaviour
             float averageCy = totalCy / movingAverageBBoxes.Count;
             float averageWidth = totalWidth / movingAverageBBoxes.Count;
             float averageHeight = totalHeight / movingAverageBBoxes.Count;
+            
+            // Dictionary to store label counts
+            Dictionary<string, int> labelCounts = new Dictionary<string, int>();
+
+            // Count occurrences of each label
+            foreach (var bbox in movingAverageBBoxes)
+            {
+                if (!labelCounts.ContainsKey(bbox.label))
+                {
+                    labelCounts[bbox.label] = 0;
+                }
+                labelCounts[bbox.label]++;
+            }
+            
+            // Find label with the maximum count
+            string mostFrequentLabel = labelCounts.OrderByDescending(kv => kv.Value).FirstOrDefault().Key;
+            
             var box = new BoundingBox
             {
                 centerX = averageCx,
                 centerY = averageCy,
                 width = averageWidth,
                 height = averageHeight,
-                label = movingAverageBBoxes.Last().label,
+                label = mostFrequentLabel
             };
             ClearAnnotations();
-            DrawBox(box, 0);
+            if (!labelBoxPoolID.ContainsKey(box.label))
+            {
+                dictIndex++;
+                labelBoxPoolID.Add(box.label, dictIndex);
+            }
+            DrawBox(box, labelBoxPoolID[box.label]);
             movingAverageBBoxes.Clear();
         }
     }
@@ -393,29 +432,25 @@ public class RunYOLO8n : MonoBehaviour
                 values = result;
                 ingredientsArray = foodFacts.getIngredients();
                 
-                //Set label text
-                if (currentLabel != box.label || newBbox || !hasIngredients)
+                // Handle the result here
+                PieChart pieChart = panel.GetComponentInChildren<PieChart>();
+                string productName = foodFacts.getProductName();
+                if (!detailedNutritionDict.ContainsKey(productName))
                 {
-                    // Handle the result here
-                    PieChart pieChart = panel.GetComponentInChildren<PieChart>();
-                    string productName = foodFacts.getProductName();
-                    if (!detailedNutritionDict.ContainsKey(productName))
-                    {
-                        Debug.Log("Setting value to dict " + productName);
-                        detailedNutritionDict.Add(productName, new DetailedNutrition(productName, values, foodFacts.getNutriGrade()));
-                    }
-                    pieChart.setValues(values);
-                    var textChildren = panel.GetComponentsInChildren<TextMeshProUGUI>();
-                    string[] type = { "Fett: ", "Kohlenhydrate: ", "Eiweiß: " };
-                    for (int i = 0; i < 3; i++)
-                    {
-                        textChildren[i + 1].text = type[i] + values[i] + "g";
-                    }
-
-                    textChildren[0].text = (int)values[0] * 9 + (int)values[1] * 4 + (int)values[2] * 4 + " kcal";
-                    currentLabel = box.label;
-                    hasIngredients = true;
+                    Debug.Log("Setting value to dict " + productName);
+                    detailedNutritionDict.Add(productName, new DetailedNutrition(productName, values, foodFacts.getNutriGrade()));
                 }
+                pieChart.setValues(values);
+                var textChildren = panel.GetComponentsInChildren<TextMeshProUGUI>();
+                string[] type = { "Fett: ", "Kohlenhydrate: ", "Eiweiß: " };
+                for (int i = 0; i < 3; i++)
+                {
+                    textChildren[i + 1].text = type[i] + values[i] + "g";
+                }
+
+                textChildren[0].text = (int)values[0] * 9 + (int)values[1] * 4 + (int)values[2] * 4 + " kcal";
+                hasIngredients = true;
+                currentLabel = box.label;
             }));
         }
     }
