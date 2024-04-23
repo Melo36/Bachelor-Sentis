@@ -49,7 +49,7 @@ public class RunYOLO8n : MonoBehaviour
 
     [SerializeField, Range(0, 1)] float iouThreshold = 0.5f;
     [SerializeField, Range(0, 1)] float scoreThreshold = 0.5f;
-    int maxOutputBoxes = 32;
+    int maxOutputBoxes = 4;
 
     //For using tensor operators:
     Ops ops;
@@ -83,6 +83,8 @@ public class RunYOLO8n : MonoBehaviour
 
     private bool placedEagle = false;
     private bool hasIngredients = false;
+    private int movingAverageWindow = 10;
+    private List<BoundingBox> movingAverageBBoxes = new List<BoundingBox>();
 
     public Dictionary<string, DetailedNutrition> detailedNutritionDict = new Dictionary<string, DetailedNutrition>();
 
@@ -93,6 +95,7 @@ public class RunYOLO8n : MonoBehaviour
         public float centerY;
         public float width;
         public float height;
+        public float area;
         public string label;
     }
 
@@ -270,15 +273,6 @@ public class RunYOLO8n : MonoBehaviour
             // displayImage.texture = targetRT;
         }
         else return;
-
-        // TODO: implement moving average
-        frame++;
-        if (frame % 10 != 0)
-        {
-            return;
-        }
-        
-        ClearAnnotations();
         
         using var input = TextureConverter.ToTensor(targetRT, imageWidth, imageHeight, 3);
         engine.Execute(input);
@@ -300,8 +294,10 @@ public class RunYOLO8n : MonoBehaviour
 
         float scaleX = displayWidth / imageWidth;
         float scaleY = displayHeight / imageHeight;
+        BoundingBox[] bboxArray = new BoundingBox[output.shape[1]];
 
         // Draw the bounding boxes
+        // Save all bboxes in an array
         for (int n = 0; n < output.shape[1]; n++)
         {
             var box = new BoundingBox
@@ -312,7 +308,50 @@ public class RunYOLO8n : MonoBehaviour
                 height = output[0, n, 3] * scaleY,
                 label = labels[labelIDs[0, 0, n]],
             };
-            DrawBox(box, n);
+            box.area = box.width * box.height;
+            bboxArray[n] = box;
+        }
+
+        // choose the bbox with the largest area
+        float maxArea = -1f;
+        int bboxIndex = -1;
+        for (int i = 0; i < bboxArray.Length; i++)
+        {
+            if (bboxArray[i].area > maxArea)
+            {
+                maxArea = bboxArray[i].area;
+                bboxIndex = i;
+            }
+        }
+        
+        // add bbox with largest area to list
+        movingAverageBBoxes.Add(bboxArray[bboxIndex]);
+
+        if (movingAverageBBoxes.Count == movingAverageWindow)
+        {
+            // Calculate average center coordinates
+            // Calculate total sums
+            float totalCx = movingAverageBBoxes.Sum(box => box.centerX);
+            float totalCy = movingAverageBBoxes.Sum(box => box.centerY);
+            float totalWidth = movingAverageBBoxes.Sum(box => box.width);
+            float totalHeight = movingAverageBBoxes.Sum(box => box.height);
+
+            // Calculate averages
+            float averageCx = totalCx / movingAverageBBoxes.Count;
+            float averageCy = totalCy / movingAverageBBoxes.Count;
+            float averageWidth = totalWidth / movingAverageBBoxes.Count;
+            float averageHeight = totalHeight / movingAverageBBoxes.Count;
+            var box = new BoundingBox
+            {
+                centerX = averageCx,
+                centerY = averageCy,
+                width = averageWidth,
+                height = averageHeight,
+                label = movingAverageBBoxes.Last().label,
+            };
+            ClearAnnotations();
+            DrawBox(box, 0);
+            movingAverageBBoxes.Clear();
         }
     }
 
@@ -322,36 +361,38 @@ public class RunYOLO8n : MonoBehaviour
         float[] values;
         GameObject panel;
         bool newBbox = false;
+        
+        if (id < boxPool.Count)
+        {
+            panel = boxPool[id];
+            panel.SetActive(true);
+        }
+        else
+        {
+            panel = CreateNewBox(Color.magenta, box.label);
+            newBbox = true;
+        }
 
-        if (currentLabel != box.label || !hasIngredients)
+        //Set box position
+        panel.transform.localPosition = new Vector3(box.centerX, -box.centerY);
+
+        //Set box size
+        RectTransform rt = panel.GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(box.width, box.height);
+        currentLabel = box.label;
+        
+        if (!placedEagle || currentLabel != box.label || newBbox)
+        {
+            placedEagle = eagleManager.placeEagle(box.centerX, box.centerY);
+        }
+
+        if (currentLabel != box.label || !hasIngredients || newBbox)
         {
             StartCoroutine(foodFacts.GetRequest(box.label, result =>
             {
                 values = result;
                 ingredientsArray = foodFacts.getIngredients();
-                if (id < boxPool.Count)
-                {
-                    panel = boxPool[id];
-                    panel.SetActive(true);
-                }
-                else
-                {
-                    panel = CreateNewBox(Color.magenta, box.label);
-                    newBbox = true;
-                }
-
-                //Set box position
-                panel.transform.localPosition = new Vector3(box.centerX, -box.centerY);
-
-                //Set box size
-                RectTransform rt = panel.GetComponent<RectTransform>();
-                rt.sizeDelta = new Vector2(box.width, box.height);
-
-                if (!placedEagle || newBbox || currentLabel != box.label)
-                {
-                    placedEagle = eagleManager.placeEagle(box.centerX, box.centerY);
-                }
-
+                
                 //Set label text
                 if (currentLabel != box.label || newBbox || !hasIngredients)
                 {
@@ -377,29 +418,6 @@ public class RunYOLO8n : MonoBehaviour
                 }
             }));
         }
-        else
-        {
-            if (id < boxPool.Count)
-            {
-                panel = boxPool[id];
-                panel.SetActive(true);
-            }
-            else
-            {
-                panel = CreateNewBox(Color.magenta, box.label);
-                newBbox = true;
-            }
-
-            //Set box position
-            panel.transform.localPosition = new Vector3(box.centerX, -box.centerY);
-
-            //Set box size
-            RectTransform rt = panel.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(box.width, box.height);
-            currentLabel = box.label;
-        }
-
-        
     }
 
     private GameObject CreateNewBox(Color boxColor, string label)

@@ -50,20 +50,19 @@ public class FoodFacts : MonoBehaviour
     {
         dict = new Dictionary<string, string>()
         {
-            {"ferrero_klassik", "8000500303627"},
+            {"ferrero_klassik", "4008400153322"},
             {"leibniz_butter", "4017100122910"},
             {"leibniz_kakao", "4017100110818"},
             {"lindt_lindor", "4000539113147"},
             {"milka_vollmilch", "3045140105502"}
         };
-        //callRequest("haferflocken_ja");
     }
 
     public IEnumerator GetRequest(string productName, System.Action<float[]> callback)
     {
         string barcode = dict[productName];
         string foodFactLink = "https://world.openfoodfacts.net/api/v2/product/" + barcode 
-                                                                         + "?fields=product_name,nutriscore_data,nutriments,nutrition_grades,ingredients_text";
+            + "?fields=product_name,nutriscore_data,nutriments,nutrition_grades,ingredients_text";
         Debug.Log(foodFactLink);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(foodFactLink))
         {
