@@ -80,6 +80,7 @@ public class RunYOLO8n : MonoBehaviour
     [SerializeField] private GameObject sceneCamera;
 
     private List<string> allergyList;
+    private List<string> deficiencyList;
     private string ingredientsArray;
 
     private bool placedEagle = false;
@@ -93,6 +94,8 @@ public class RunYOLO8n : MonoBehaviour
     private int dictIndex = -1;
 
     private Transform currentAllergyLabel;
+
+    private Dictionary<string, string[]> deficiencyDict;
 
     //bounding box data
     public struct BoundingBox
@@ -129,6 +132,9 @@ public class RunYOLO8n : MonoBehaviour
         foodFacts = GetComponent<FoodFacts>();
 
         allergyList = AllergyList.Instance.allergyList;
+        deficiencyList = AllergyList.Instance.deficiencyList;
+
+        setupDeficiencyDict();
         
         #if UNITY_EDITOR_OSX
         arSession.SetActive(false);
@@ -219,8 +225,7 @@ public class RunYOLO8n : MonoBehaviour
         model.AddConstant(new Lays.Constant("0", new int[] { 0 }));
         model.AddConstant(new Lays.Constant("1", new int[] { 1 }));
         model.AddConstant(new Lays.Constant("4", new int[] { 4 }));
-
-
+        
         model.AddConstant(new Lays.Constant("classes_plus_4", new int[] { numClasses + 4 }));
         model.AddConstant(new Lays.Constant("maxOutputBoxes", new int[] { maxOutputBoxes }));
         model.AddConstant(new Lays.Constant("iouThreshold", new float[] { iouThreshold }));
@@ -478,7 +483,7 @@ public class RunYOLO8n : MonoBehaviour
                 if (foundAllergies.Count > 0)
                 {
                     currentAllergyLabel.gameObject.SetActive(true);
-                    for (int i = 0; i < foundAllergies.Count; i++)
+                    for (int i = 0; i < Math.Min(foundAllergies.Count, 3); i++)
                     {
                         detailedNutritionDict[productName].allergies.Add(foundAllergies[i]);
                         GameObject child = currentAllergyLabel.transform.GetChild(i + 1).gameObject;
@@ -489,6 +494,34 @@ public class RunYOLO8n : MonoBehaviour
                 else
                 {
                     currentAllergyLabel.gameObject.SetActive(false);
+                }
+
+                if (foundAllergies.Count == 0)
+                {
+                    List<string> foundDeficiencies = new List<string>();
+                    for (int i = 0; i < deficiencyList.Count; i++)
+                    {
+                        string[] richIngredients = deficiencyDict[deficiencyList[i]];
+                        for (int j = 0; j < richIngredients.Length; j++)
+                        {
+                            if (ingredientsArray.ContainsInsensitive(richIngredients[j]))
+                            {
+                                foundDeficiencies.Add(deficiencyList[i]);
+                            }
+                        }
+                    }
+
+                    if (foundDeficiencies.Count > 0)
+                    {
+                        currentAllergyLabel.gameObject.SetActive(true);
+                        for (int i = 0; i < Math.Min(foundDeficiencies.Count, 3); i++)
+                        {
+                            detailedNutritionDict[productName].defficiencies.Add(foundDeficiencies[i]);
+                            GameObject child = currentAllergyLabel.transform.GetChild(i + 4).gameObject;
+                            child.GetComponentInChildren<TextMeshProUGUI>().text = foundDeficiencies[i];
+                            child.SetActive(true);
+                        }
+                    }
                 }
             }));
         }
@@ -533,6 +566,39 @@ public class RunYOLO8n : MonoBehaviour
 
         // Calculate the anchored position to align the bottom of the nutritionLabel with the top of the panel
         rt.anchoredPosition = new Vector2(0f, nutritionLabelHeight);
+    }
+    
+    private void setupDeficiencyDict()
+    {
+        deficiencyDict = new Dictionary<string, string[]>()
+        {
+            { "Eisen", new [] 
+            {
+                "Sesam", "Pistazie", "Cashew"
+            }},
+            {"Jod", new []
+            {
+                "Fisch", "Milch", "Käse", "Brokkoli", "Spinat"
+            }},
+            { "Vitamin D", new []
+            {
+                "Fisch", "Champignon", "Pfifferling", "Steinpilz"
+            }},
+            { "Vitamin B12", new []
+            {
+                "Fisch", "Emmentaler", "Quark", "Milch"
+            }},
+            { "Magnesium", new []
+                {
+                    "Kürbiskern", "Sonnenblumenöl", "Cashew", "Erdnüsse", "Banane"
+                }
+            },
+            { "Omega 3-Fettsäuren", new []
+                {
+                    "Lein", "Walnuss", "Fisch", "Soja", "Olivenöl", 
+                }
+            }
+        };
     }
 
     private void ClearAnnotations()

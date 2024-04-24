@@ -29,6 +29,7 @@ public class FoodFacts : MonoBehaviour
         public NutriscoreData nutriscore_data;
         public string product_name;
         public string ingredients_text;
+        public string[] allergens_tags;
     }
     
     [System.Serializable]
@@ -41,6 +42,7 @@ public class FoodFacts : MonoBehaviour
     }
 
     private string ingredientsText;
+    private string[] allergensTags;
     private string groceryName;
     private string nutriGrade;
 
@@ -62,7 +64,7 @@ public class FoodFacts : MonoBehaviour
     {
         string barcode = dict[productName];
         string foodFactLink = "https://world.openfoodfacts.net/api/v2/product/" + barcode 
-            + "?fields=product_name,nutriscore_data,nutriments,nutrition_grades,ingredients_text";
+            + "?fields=product_name,nutriscore_data,nutriments,nutrition_grades,ingredients_text,allergens_tags";
         Debug.Log(foodFactLink);
         using (UnityWebRequest webRequest = UnityWebRequest.Get(foodFactLink))
         {
@@ -95,6 +97,12 @@ public class FoodFacts : MonoBehaviour
                         ingredientsText = response.product.ingredients_text;
                         groceryName = response.product.product_name;
                         nutriGrade = response.product.nutriscore_data.grade;
+                        allergensTags = response.product.allergens_tags;
+                        Debug.Log("Print allergensTags");
+                        foreach (string allergen in allergensTags)
+                        {
+                            Debug.Log("- " + allergen.Substring(3));
+                        }
                         float[] result = getNutriments(productNutriments);
                         callback?.Invoke(result);
                     }
@@ -118,6 +126,10 @@ public class FoodFacts : MonoBehaviour
 
     public string getIngredients()
     {
+        foreach (string allergen in allergensTags)
+        {
+            ingredientsText += " " + allergen.Substring(3);
+        }
         return ingredientsText;
     }
 

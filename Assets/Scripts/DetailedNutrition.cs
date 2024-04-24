@@ -7,6 +7,7 @@ public class DetailedNutrition
     public string productName;
     public float[] nutritionValues;
     public List<string> allergies = new List<string>();
+    public List<string> defficiencies = new List<string>();
     public string nutriscore;
 
     public DetailedNutrition(string productName, float[] nutritionValues, string nutriscore)
