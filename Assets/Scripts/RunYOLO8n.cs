@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using Unity.IntegerTime;
 using Unity.Sentis;
@@ -11,6 +12,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using Lays = Unity.Sentis.Layers;
 using Unity.Collections;
+using Unity.VisualScripting;
 
 
 public class RunYOLO8n : MonoBehaviour
@@ -79,7 +81,6 @@ public class RunYOLO8n : MonoBehaviour
 
     private List<string> allergyList;
     private string ingredientsArray;
-    private List<string> foundAllergies = new List<string>();
 
     private bool placedEagle = false;
     private bool hasIngredients = false;
@@ -90,6 +91,8 @@ public class RunYOLO8n : MonoBehaviour
 
     private Dictionary<string, int> labelBoxPoolID = new Dictionary<string, int>();
     private int dictIndex = -1;
+
+    private Transform currentAllergyLabel;
 
     //bounding box data
     public struct BoundingBox
@@ -408,6 +411,8 @@ public class RunYOLO8n : MonoBehaviour
         }
         else
         {
+            ingredientsArray = null;
+            hasIngredients = false;
             panel = CreateNewBox(Color.magenta, box.label);
             newBbox = true;
         }
@@ -447,10 +452,44 @@ public class RunYOLO8n : MonoBehaviour
                 {
                     textChildren[i + 1].text = type[i] + values[i] + "g";
                 }
-
+                
+                List<string> foundAllergies = new List<string>();
+                
                 textChildren[0].text = (int)values[0] * 9 + (int)values[1] * 4 + (int)values[2] * 4 + " kcal";
                 hasIngredients = true;
                 currentLabel = box.label;
+                
+                if (ingredientsArray == null || allergyList == null)
+                {
+                    Debug.Log("ingredients or allergyList null");
+                    currentAllergyLabel.gameObject.SetActive(false);
+                    return;
+                }
+        
+                for (int i = 0; i < allergyList.Count; i++)
+                {
+                    if (ingredientsArray.ContainsInsensitive(allergyList[i]))
+                    {
+                        foundAllergies.Add(allergyList[i]);
+                        Debug.Log("Found allergy " + allergyList[i]);
+                    }
+                }
+                
+                if (foundAllergies.Count > 0)
+                {
+                    currentAllergyLabel.gameObject.SetActive(true);
+                    for (int i = 0; i < foundAllergies.Count; i++)
+                    {
+                        detailedNutritionDict[productName].allergies.Add(foundAllergies[i]);
+                        GameObject child = currentAllergyLabel.transform.GetChild(i + 1).gameObject;
+                        child.GetComponentInChildren<TextMeshProUGUI>().text = foundAllergies[i];
+                        child.SetActive(true);
+                    }
+                }
+                else
+                {
+                    currentAllergyLabel.gameObject.SetActive(false);
+                }
             }));
         }
     }
@@ -475,7 +514,7 @@ public class RunYOLO8n : MonoBehaviour
     private void createNutritionLabel(GameObject panel, string label)
     {
         var nutritionLabel = Instantiate(nutritionLabelPrefab, panel.transform);
-        var allergyLabel = nutritionLabel.transform.GetChild(1);
+        currentAllergyLabel = nutritionLabel.transform.GetChild(1);
         Canvas canvas = nutritionLabel.GetComponentInChildren<Canvas>();
         canvas.transform.localScale = new Vector3(1,1,1);
         
@@ -494,33 +533,6 @@ public class RunYOLO8n : MonoBehaviour
 
         // Calculate the anchored position to align the bottom of the nutritionLabel with the top of the panel
         rt.anchoredPosition = new Vector2(0f, nutritionLabelHeight);
-
-        if (ingredientsArray == null || allergyList == null)
-        {
-            Debug.Log("ingredients or allergyList null");
-            return;
-        }
-        
-        for (int i = 0; i < allergyList.Count; i++)
-        {
-            if (ingredientsArray.Contains(allergyList[i]))
-            {
-                foundAllergies.Add(allergyList[i]);
-                Debug.Log("Found allergy");
-            }
-        }
-
-        if (foundAllergies.Count > 0)
-        {
-            allergyLabel.gameObject.SetActive(true);
-            for (int i = 0; i < foundAllergies.Count; i++)
-            {
-                detailedNutritionDict[label].allergies.Add(foundAllergies[i]);
-                GameObject child = allergyLabel.transform.GetChild(i + 1).gameObject;
-                child.GetComponentInChildren<TextMeshProUGUI>().text = foundAllergies[i];
-                child.SetActive(true);
-            }
-        }
     }
 
     private void ClearAnnotations()
