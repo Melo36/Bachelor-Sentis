@@ -98,11 +98,6 @@ public class FoodFacts : MonoBehaviour
                         groceryName = response.product.product_name;
                         nutriGrade = response.product.nutriscore_data.grade;
                         allergensTags = response.product.allergens_tags;
-                        Debug.Log("Print allergensTags");
-                        foreach (string allergen in allergensTags)
-                        {
-                            Debug.Log("- " + allergen.Substring(3));
-                        }
                         float[] result = getNutriments(productNutriments);
                         callback?.Invoke(result);
                     }

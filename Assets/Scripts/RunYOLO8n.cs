@@ -470,6 +470,11 @@ public class RunYOLO8n : MonoBehaviour
                     currentAllergyLabel.gameObject.SetActive(false);
                     return;
                 }
+                
+                RectTransform rt4 = currentAllergyLabel.GetComponent<RectTransform>();
+                float yOffset = rt.rect.height;
+                Debug.Log("y offset " + yOffset);
+                rt4.anchoredPosition = new Vector2(0, -yOffset - rt4.rect.height);
         
                 for (int i = 0; i < allergyList.Count; i++)
                 {
@@ -538,13 +543,13 @@ public class RunYOLO8n : MonoBehaviour
         img.type = Image.Type.Sliced;
         panel.transform.SetParent(displayLocation, false);
 
-        createNutritionLabel(panel, label);
+        createNutritionLabel(panel, img, label);
 
         boxPool.Add(panel);
         return panel;
     }
 
-    private void createNutritionLabel(GameObject panel, string label)
+    private void createNutritionLabel(GameObject panel, Image image, string label)
     {
         var nutritionLabel = Instantiate(nutritionLabelPrefab, panel.transform);
         currentAllergyLabel = nutritionLabel.transform.GetChild(1);
