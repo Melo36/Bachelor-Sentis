@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
@@ -43,7 +44,10 @@ public class PlaceEagleManager : MonoBehaviour
     public Texture[] nutriscoreTextures = new Texture[5];
     public RawImage nutriscoreImage;
     private Dictionary<string, Texture> nutriDict;
-    
+
+    private DemoController demoController;
+    private Animator animator;
+    private int itemCount = 0;
     
     void Start()
     {
@@ -58,6 +62,9 @@ public class PlaceEagleManager : MonoBehaviour
         nutriDict.Add("c", nutriscoreTextures[2]);
         nutriDict.Add("d", nutriscoreTextures[3]);
         nutriDict.Add("e", nutriscoreTextures[4]);
+
+        demoController = eagle.GetComponent<DemoController>();
+        animator = eagle.GetComponent<Animator>();
     }
 
     private void closeDetailedView()
@@ -71,23 +78,28 @@ public class PlaceEagleManager : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            // Check if the touch phase is "Began" (user just touched the screen)
             if (touch.phase == TouchPhase.Began)
             {
-                // Perform a raycast from the touch position
                 Ray ray = arCamera.ScreenPointToRay(touch.position);
                 RaycastHit hit;
 
-                // Check if the raycast hits any GameObject
                 if (Physics.Raycast(ray, out hit))
                 {
-                    // Check if the hit GameObject has a Collider (e.g., it's interactable)
                     Collider collider = hit.collider;
                     if (collider != null && collider.CompareTag("Eagle"))
                     {
                         // The user clicked on the eagle GameObject
                         Debug.Log("Eagle Clicked!");
+                        
                         Dictionary<string, DetailedNutrition> detailedNutritionDict = yolov8.detailedNutritionDict;
+                        
+                        if (itemCount > 0 && itemCount == detailedNutritionDict.Count)
+                        {
+                            demoController.flyAround(animator);
+                            return;
+                        }
+
+                        itemCount = detailedNutritionDict.Count;
                         
                         DetailedNutrition healthiestChoice = null;
                         string minNutriGrade = "e";

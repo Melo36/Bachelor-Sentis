@@ -5,7 +5,7 @@ public class DemoController : MonoBehaviour
 {
 
 	private Animator animator;
-
+	
 	public float walkspeed = 5;
 	private float horizontal;
 	private float vertical;
@@ -59,7 +59,7 @@ public class DemoController : MonoBehaviour
 
 	void Update()
 	{
-		if (!dead)
+		if (!dead) // remove false if you want to use this
 		{
 			// move camera
 			if (gamecam)
@@ -69,7 +69,7 @@ public class DemoController : MonoBehaviour
 			if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Jump") && !isAttacking)
 			{
 				isAttacking = true;
-				animator.SetTrigger("Attack");
+				animator.SetTrigger("Leave");
 				StartCoroutine(stopAttack(1));
                 tryDamageTarget();
 
@@ -141,9 +141,16 @@ public class DemoController : MonoBehaviour
         if(target != null)
         {
             transform.LookAt(target.transform);
-            
         }
     }
+
+    public void flyAround(Animator eagleAnimator)
+    {
+		Debug.Log("Playing animation");
+		eagleAnimator.SetTrigger("Leave");
+		StartCoroutine(stopAttack(1));
+    }
+    
     public void DealDamage(DealDamageComponent comp)
     {
         if (target != null)
@@ -201,7 +208,7 @@ public class DemoController : MonoBehaviour
                 child.SetActive(false);
             }
 		}
-		animator = GetComponentInChildren<Animator>();
+		animator = GetComponent<Animator>();
     }
 
     public bool ContainsParam(Animator _Anim, string _ParamName)

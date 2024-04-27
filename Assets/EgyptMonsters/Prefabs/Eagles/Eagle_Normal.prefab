@@ -1057,8 +1057,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4350637029938684}
   - component: {fileID: 95381938143262094}
-  - component: {fileID: 114337544043692620}
   - component: {fileID: 9083010450819927290}
+  - component: {fileID: -6381366840296505613}
+  - component: {fileID: 114337544043692620}
+  - component: {fileID: -2120115415455101845}
   m_Layer: 0
   m_Name: Eagle_Normal
   m_TagString: Eagle
@@ -1106,19 +1108,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &114337544043692620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879581886640764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bdf4a8e54cc06249ae87aacebbe862d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitFX: {fileID: 1486350219787176, guid: 87b722261969f194ea7e30f358a7b1e6, type: 3}
 --- !u!65 &9083010450819927290
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1140,6 +1129,67 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!54 &-6381366840296505613
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879581886640764}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &114337544043692620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879581886640764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bdf4a8e54cc06249ae87aacebbe862d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitFX: {fileID: 1486350219787176, guid: 87b722261969f194ea7e30f358a7b1e6, type: 3}
+--- !u!114 &-2120115415455101845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879581886640764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05210583cc3daf24186b660cada5da85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canFlyAround: 1
+  walkspeed: 5
+  gamecam: {fileID: 0}
+  camPosition: {x: 0, y: 0}
+  characters: []
+  currentChar: 0
+  targets: []
+  minAttackDistance: 0
+  nameText: {fileID: 0}
 --- !u!1 &1916066565231324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,7 +1762,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: bd3a651ab4ad84d71a2d42a67cdad01b, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190289
+    rgba: 4291887129
 --- !u!114 &6001452719410187206
 MonoBehaviour:
   m_ObjectHideFlags: 0
