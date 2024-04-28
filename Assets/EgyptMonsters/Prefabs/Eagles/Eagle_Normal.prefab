@@ -1059,8 +1059,6 @@ GameObject:
   - component: {fileID: 95381938143262094}
   - component: {fileID: 9083010450819927290}
   - component: {fileID: -6381366840296505613}
-  - component: {fileID: 114337544043692620}
-  - component: {fileID: -2120115415455101845}
   m_Layer: 0
   m_Name: Eagle_Normal
   m_TagString: Eagle
@@ -1156,40 +1154,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114337544043692620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879581886640764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bdf4a8e54cc06249ae87aacebbe862d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitFX: {fileID: 1486350219787176, guid: 87b722261969f194ea7e30f358a7b1e6, type: 3}
---- !u!114 &-2120115415455101845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879581886640764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05210583cc3daf24186b660cada5da85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canFlyAround: 1
-  walkspeed: 5
-  gamecam: {fileID: 0}
-  camPosition: {x: 0, y: 0}
-  characters: []
-  currentChar: 0
-  targets: []
-  minAttackDistance: 0
-  nameText: {fileID: 0}
 --- !u!1 &1916066565231324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1527,7 +1491,7 @@ GameObject:
   - component: {fileID: 8417269713129841432}
   - component: {fileID: 8231044347860216731}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: TextRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

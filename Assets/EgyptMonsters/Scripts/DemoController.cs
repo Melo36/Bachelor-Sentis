@@ -59,7 +59,7 @@ public class DemoController : MonoBehaviour
 
 	void Update()
 	{
-		if (!dead) // remove false if you want to use this
+		if (!dead && false) // remove false if you want to use this
 		{
 			// move camera
 			if (gamecam)

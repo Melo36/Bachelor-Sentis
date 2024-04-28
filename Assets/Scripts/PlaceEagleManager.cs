@@ -48,6 +48,12 @@ public class PlaceEagleManager : MonoBehaviour
     private DemoController demoController;
     private Animator animator;
     private int itemCount = 0;
+
+    private GameObject textRoot;
+
+    public GameObject[] checkmarkTexts;
+    public GameObject deficiencyWhiteBox;
+    public GameObject bottomNutriScore;
     
     void Start()
     {
@@ -62,9 +68,6 @@ public class PlaceEagleManager : MonoBehaviour
         nutriDict.Add("c", nutriscoreTextures[2]);
         nutriDict.Add("d", nutriscoreTextures[3]);
         nutriDict.Add("e", nutriscoreTextures[4]);
-
-        demoController = eagle.GetComponent<DemoController>();
-        animator = eagle.GetComponent<Animator>();
     }
 
     private void closeDetailedView()
@@ -95,7 +98,9 @@ public class PlaceEagleManager : MonoBehaviour
                         
                         if (itemCount > 0 && itemCount == detailedNutritionDict.Count)
                         {
-                            demoController.flyAround(animator);
+                            textRoot.SetActive(false);
+                            animator.SetTrigger("Leave");
+                            StartCoroutine(waitFor(3f));
                             return;
                         }
 
@@ -151,6 +156,18 @@ public class PlaceEagleManager : MonoBehaviour
                                     break;
                             }
                             productImage.SetNativeSize();
+
+                            if (healthiestChoice.defficiencies.Count > 0)
+                            {
+                                deficiencyWhiteBox.SetActive(true);
+                                bottomNutriScore.SetActive(true);
+                                List<string> def = healthiestChoice.defficiencies;
+                                for (int i = 0; i < Math.Min(def.Count, 3); i++)
+                                {
+                                    checkmarkTexts[i].SetActive(true);
+                                    checkmarkTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = def[i];
+                                }
+                            }
                         }
                         detailedView.SetActive(true);
                     }
@@ -173,6 +190,9 @@ public class PlaceEagleManager : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
             instantiatedEagle = Instantiate(eagle, eaglePosition, rotation);
             
+            animator = instantiatedEagle.GetComponent<Animator>();
+            textRoot = instantiatedEagle.transform.Find("TextRoot").gameObject;
+            
             foreach (var plane in arPlaneManager.trackables)
             {
                 plane.gameObject.SetActive(false);
@@ -181,5 +201,11 @@ public class PlaceEagleManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+    
+    private IEnumerator waitFor(float length)
+    {
+        yield return new WaitForSeconds(length); 
+        textRoot.SetActive(true);
     }
 }
