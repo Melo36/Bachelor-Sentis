@@ -28,6 +28,8 @@ public class PlaceEagleManager : MonoBehaviour
     [SerializeField]
     private Button closeButton;
 
+    public Button closeComparisonButton;
+
     [SerializeField] private RunYOLO8n yolov8;
 
     [Header("Detail Overview Settings")] 
@@ -54,6 +56,11 @@ public class PlaceEagleManager : MonoBehaviour
     public GameObject[] checkmarkTexts;
     public GameObject deficiencyWhiteBox;
     public GameObject bottomNutriScore;
+
+    private SetupComparison comparison;
+    public GameObject comparisonPage;
+
+    private bool comparisonInitialized = false;
     
     void Start()
     {
@@ -61,6 +68,7 @@ public class PlaceEagleManager : MonoBehaviour
         arPlaneManager = GetComponent<ARPlaneManager>();
         eagle.GetComponentInChildren<BillboardText>().mainCamera = arCamera;
         closeButton.onClick.AddListener(closeDetailedView);
+        closeComparisonButton.onClick.AddListener(closeCopmarisonView);
 
         nutriDict = new Dictionary<string, Texture>();
         nutriDict.Add("a", nutriscoreTextures[0]);
@@ -68,11 +76,22 @@ public class PlaceEagleManager : MonoBehaviour
         nutriDict.Add("c", nutriscoreTextures[2]);
         nutriDict.Add("d", nutriscoreTextures[3]);
         nutriDict.Add("e", nutriscoreTextures[4]);
+
+        comparison = gameObject.GetComponent<SetupComparison>();
     }
 
     private void closeDetailedView()
     {
         detailedView.SetActive(false);
+        if (comparisonInitialized)
+        {
+            comparisonPage.SetActive(true);
+        }
+    }
+
+    private void closeCopmarisonView()
+    {
+        comparisonPage.SetActive(false);
     }
 
     private void Update()
@@ -107,18 +126,24 @@ public class PlaceEagleManager : MonoBehaviour
                         itemCount = detailedNutritionDict.Count;
                         
                         DetailedNutrition healthiestChoice = null;
+                        DetailedNutrition worstChoice = null;
                         string minNutriGrade = "e";
+                        string maxNutriGrade = "a";
                         foreach (KeyValuePair<string, DetailedNutrition> choice in detailedNutritionDict)
                         {
                             if (choice.Value.allergies.Count > 0)
                             {
                                 continue;
                             }
-                            Debug.Log(choice.Value.productName + " " + choice.Value.nutriscore);
                             if (string.Compare(choice.Value.nutriscore, minNutriGrade) < 0)
                             {
                                 minNutriGrade = choice.Value.nutriscore;
                                 healthiestChoice = choice.Value;
+                            }
+                            else if(string.Compare(choice.Value.nutriscore, maxNutriGrade) > 0)
+                            {
+                                maxNutriGrade = choice.Value.nutriscore;
+                                worstChoice = choice.Value;
                             }
                         }
                         
@@ -167,6 +192,12 @@ public class PlaceEagleManager : MonoBehaviour
                                     checkmarkTexts[i].SetActive(true);
                                     checkmarkTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = def[i];
                                 }
+                            }
+
+                            if (worstChoice != null)
+                            {
+                                comparisonInitialized = true;
+                                comparison.setupComparisonPage(healthiestChoice, worstChoice);
                             }
                         }
                         detailedView.SetActive(true);
