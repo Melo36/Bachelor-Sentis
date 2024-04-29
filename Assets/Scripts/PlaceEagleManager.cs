@@ -10,6 +10,7 @@ using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using Random = UnityEngine.Random;
 
 public class PlaceEagleManager : MonoBehaviour
 {
@@ -117,9 +118,18 @@ public class PlaceEagleManager : MonoBehaviour
                         
                         if (itemCount > 0 && itemCount == detailedNutritionDict.Count)
                         {
+                            float random = Random.Range(0.0f, 1.0f);
                             textRoot.SetActive(false);
-                            animator.SetTrigger("Leave");
-                            StartCoroutine(waitFor(3f));
+                            if (random < 0.5f)
+                            {
+                                animator.SetTrigger("Leave");
+                                StartCoroutine(waitFor(3f));
+                            }
+                            else
+                            {
+                                animator.SetTrigger("Hit");
+                                StartCoroutine(waitFor(2f));
+                            }
                             return;
                         }
 
