@@ -1084,6 +1084,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 68b960e7be37844f7b95ee53009768f2, type: 3}
   - {fileID: 2800000, guid: 68645fe2954514599b9a63afe6990c38, type: 3}
   nutriscoreImage: {fileID: 292862237}
+  secondNutriScoreImage: {fileID: 511636757}
   checkmarkTexts:
   - {fileID: 772735680}
   - {fileID: 1611771963}
@@ -2661,6 +2662,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   nutriscoreImage: {fileID: 0}
+  secondNutriScoreImage: {fileID: 0}
   checkmarkTexts: []
   deficiencyWhiteBox: {fileID: 0}
   bottomNutriScore: {fileID: 0}
@@ -4620,7 +4622,7 @@ RectTransform:
   m_GameObject: {fileID: 1477261583}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 518415417}

@@ -46,6 +46,7 @@ public class PlaceEagleManager : MonoBehaviour
     public Texture[] textureArray = new Texture[5];
     public Texture[] nutriscoreTextures = new Texture[5];
     public RawImage nutriscoreImage;
+    public RawImage secondNutriScoreImage;
     private Dictionary<string, Texture> nutriDict;
 
     private DemoController demoController;
@@ -172,6 +173,8 @@ public class PlaceEagleManager : MonoBehaviour
                             calorieText.text = (int)healthiestChoice.nutritionValues[0] * 9 + (int)healthiestChoice.nutritionValues[1] * 4 + (int)healthiestChoice.nutritionValues[2] * 4 + " kcal";
                             nutriscoreImage.texture = nutriDict[healthiestChoice.nutriscore];
                             nutriscoreImage.transform.localScale = new Vector3(2.5f, 2.5f);
+                            secondNutriScoreImage.texture = nutriDict[healthiestChoice.nutriscore];
+                            secondNutriScoreImage.transform.localScale = new Vector3(2.5f, 2.5f);
                             switch (healthiestChoice.productName)
                             {
                                 case "Ferrero Küsschen":
@@ -204,7 +207,7 @@ public class PlaceEagleManager : MonoBehaviour
                                 }
                             }
 
-                            if (worstChoice != null)
+                            if (worstChoice != null && worstChoice != healthiestChoice)
                             {
                                 comparisonInitialized = true;
                                 comparison.setupComparisonPage(healthiestChoice, worstChoice);
